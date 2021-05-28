@@ -1,0 +1,23 @@
+These files contain the regional sea level rise projections from which projections at coastal locations can be found. 
+
+The columns denote the longitude in degrees east, rows denote the latitude in degrees north. 
+
+Values in each cell are regional sea level rise projections with respect to the mean sea level rise in the period 1986-2005. Empty cells are locations on land.
+
+The individual files are labeled by emission scenario and time period:
+
+26 refers to RCP 2.6
+45 refers to RCP 4.5
+85 refers to RCP 8.5
+
+2040 refers to projections for the period 2031-2050
+2055 refers to projections for the period 2046-2065
+2090 refers to projections for the period 2081-2100
+2100 refers to projections for the year 2100
+
+For each scenario and period, three files are included:
+
+median refers to the estimated projection
+low and high denote the boundaries of the likely range
+
+The file megacities_example.xlsx includes data for the largest coastal megacities, including the longitude and latitude of the city, the row and column representing the city's location, and the regional sea level projections and likely ranges for 2055 and 2090 for each scenario.
