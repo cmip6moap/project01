@@ -14,9 +14,16 @@ distinctcolors = ['#e6194B', '#3cb44b', '#ffe119','#4363d8', '#f58231', '#42d4f4
 
 ice_source = 'Glaciers'
 region = None
+risk_averse = False
 
-#files = glob.glob('../../data/raw_data/Landice-Edwards21/proj_MAIN_TIMESERIES/projections_*85.csv')
-files = glob.glob('../../data/raw_data/Landice-Edwards21/proj_MAIN_TIMESERIES/projections_*.csv')
+if risk_averse:
+    folder = '../../data/raw_data/Landice-Edwards21/proj_S11_RISK_TIMESERIES'
+else:
+    folder = '../../data/raw_data/Landice-Edwards21/proj_MAIN_TIMESERIES'
+
+
+
+files = glob.glob(folder + '/projections_*.csv')
 
 T2015 = hadcrut5.getTstats(2010,2020)['Tanom']
 
@@ -33,7 +40,7 @@ for file in files:
         V = V.groupby(by=['sample','year']).agg({'SLE': 'sum', 'GSAT': 'mean'}, as_index=False).reset_index()
 
     Q = V.groupby(by=['sample'])
-    Q = Q.agg({'GSAT': 'mean', 'SLE': lambda x: (x.iloc[-5:].mean())*100/(2098-2016)}, as_index=False).reset_index()
+    Q = Q.agg({'GSAT': 'mean', 'SLE': lambda x: (x.iloc[-5:].mean())*100/(2098-2015)}, as_index=False).reset_index()
 
     h=plt.scatter(Q.GSAT+T2015, Q.SLE/100, c=distinctcolors[fileix], s=2, alpha=.5)
     plt.scatter(Q.GSAT.median()+T2015, Q.SLE.median()/100, c=distinctcolors[fileix], s=50, zorder=10, edgecolors='k', label=scenario)
@@ -41,9 +48,14 @@ for file in files:
     fileix = fileix + 1
 
 #------------ PLOT comparison data --------------
+if region is None:
+    sheet_name = ice_source
+else:
+    sheet_name = region
+
 comparison_data = pd.read_excel(
         "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
-        sheet_name = ice_source,
+        sheet_name = sheet_name,
         skiprows = 3,
     )
 for ix, row in comparison_data.iterrows():
