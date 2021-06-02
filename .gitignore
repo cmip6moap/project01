@@ -1,2 +1,18 @@
+repoexclude/
 __pycache__/
 .ipynb_checkpoints/
+
+*.tmp
+
+# Word temporary
+~$*.doc*
+
+# Excel temporary
+~$*.xls*
+
+# Excel Backup File
+*.xlk
+
+# PowerPoint temporary
+~$*.ppt*
+
