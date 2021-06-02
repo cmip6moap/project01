@@ -64,6 +64,10 @@ def getTstats(startyr, endyr):
 
 if __name__ == "__main__":
     # this is some test code:
-    df = pd.read_excel("../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx", sheet_name='GMSL', skiprows=3)
-    for ix,row in df.iterrows():
-        print(row['Name'],getTstats(row['Period start'], row['Period end']))
+    df = pd.read_excel(
+        "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
+        sheet_name="GMSL",
+        skiprows=3,
+    )
+    for ix, row in df.iterrows():
+        print(row["Name"], getTstats(row["Period start"], row["Period end"]))
