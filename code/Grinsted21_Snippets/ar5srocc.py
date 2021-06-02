@@ -1,8 +1,8 @@
 
 #
-# extract GMSL rate values from AR5 and SROCC
+# extract and plot GMSL rate vs T values from AR5 and SROCC
 #
-#
+# Aslak Grinsted 2021
 
 
 import numpy as np
