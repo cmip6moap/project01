@@ -15,10 +15,16 @@ import sgolay
 
 scenariocolors = {'SSP119': '#e6194B', 'SSP126': '#3cb44b',
                   'SSP245': '#ffe119', 'SSP370': '#4363d8',
-                  'SSP585': '#f58231'}
+                  'SSP585': '#f58231', 'SSPNDC': '#42d4f4'}
 
 
 def extractRateVsT(ice_source = 'Glaciers', region = '', risk_averse = False, targetperiods = np.array([[2016,2050], [2050,2100]])):
+
+
+
+    filename = '../../data/processed_data/ExtractedFromTamsin/{}_{}_risk{}.csv'.format(ice_source,region,risk_averse)
+
+
     if risk_averse:
         folder = '../../data/raw_data/Landice-Edwards21/proj_S11_RISK_TIMESERIES'
     else:
@@ -65,6 +71,7 @@ def extractRateVsT(ice_source = 'Glaciers', region = '', risk_averse = False, ta
         # Q = Q.agg({'GSAT': 'mean', 'SLE': lambda x: (x.iloc[-5:].mean())*100/(2098-2015)}, as_index=False).reset_index()
         # h=plt.scatter(Q.GSAT+T2015, Q.SLE/100, c=distinctcolors[fileix], s=2, alpha=.5)
         # plt.scatter(Q.GSAT.median()+T2015, Q.SLE.median()/100, c=distinctcolors[fileix], s=50, zorder=10, edgecolors='k', label=scenario)
+        output.to_csv(filename)
 
     return output
 
@@ -76,8 +83,8 @@ def plotScatter(output):
     for groupix, g in G:
         scenario = groupix[0]
         col = scenariocolors[scenario]
-        plt.scatter(g.Tavg, g.dSdt, c=col, s=2, alpha=.5)
-        plt.scatter(g.Tavg.median(), g.dSdt.median(), c=col, s=50, zorder=10, edgecolors='k', label=scenario)
+        #plt.scatter(g.Tavg, g.dSdt*100, c=col, s=2, alpha=.5)
+        plt.scatter(g.Tavg.median(), g.dSdt.median()*100, c=col, s=50, zorder=10, edgecolors='k', label=scenario)
 
     #------------ PLOT comparison data --------------
     if region:
@@ -100,5 +107,17 @@ def plotScatter(output):
     plt.legend()
 
 
-output = extractRateVsT(ice_source = 'GrIS', region='')
-plotScatter(output)
+
+GrIS = extractRateVsT(ice_source = 'GrIS', region='', risk_averse=False)
+Glaciers = extractRateVsT(ice_source = 'Glaciers', region='', risk_averse=False)
+EAIS = extractRateVsT(ice_source = 'AIS', region='EAIS', risk_averse=False)
+WAIS = extractRateVsT(ice_source = 'AIS', region='EAIS', risk_averse=False)
+Pen = extractRateVsT(ice_source = 'AIS', region='Pen', risk_averse=False)
+AIS = extractRateVsT(ice_source = 'AIS', region='', risk_averse=False)
+
+EAIS = extractRateVsT(ice_source = 'AIS', region='EAIS', risk_averse=True)
+WAIS = extractRateVsT(ice_source = 'AIS', region='EAIS', risk_averse=True)
+Pen = extractRateVsT(ice_source = 'AIS', region='Pen', risk_averse=True)
+AIS = extractRateVsT(ice_source = 'AIS', region='', risk_averse=True)
+
+#plotScatter(output)
