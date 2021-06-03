@@ -5,11 +5,11 @@ import array
 
 mip = "CMIP"
 expr = "historical"
-run_to_plot = 1 # run listed on row of corresponding text file 
+run_to_plot = 1 # run listed on row of corresponding text file
 
 yr_strt = 1801
 yr_end = 2040
-n_mnths = 12 * (yr_end - yr_strt + 1) 
+n_mnths = 12 * (yr_end - yr_strt + 1)
 
 yr_ref = 2000
 n_ref = 12 * (yr_ref - yr_strt) + 1
@@ -17,7 +17,7 @@ n_ref = 12 * (yr_ref - yr_strt) + 1
 fn = "cmip6_" + mip + "_" + expr + "_strh_gm.dat"
 print(fn)
 fid = open(fn, mode = 'rb')
-a = array.array("i")  
+a = array.array("i")
 a.fromfile(fid, 1)
 
 b = a[0]
@@ -25,7 +25,7 @@ n_vals = b // 4
 n_runs = n_vals // n_mnths
 print(n_runs)
 
-tmp = array.array("f") 
+tmp = array.array("f")
 tmp.fromfile(fid, b//4+1)
 tmp = tmp[1:]
 tmp = np.asarray(tmp)
@@ -37,9 +37,48 @@ for i in range(n_runs): # reference to Jan 2000
 x = np.zeros(n_mnths)
 print(len(x))
 for i in range(n_mnths):
-    x[i] = (i + 0.5) / 12 + yr_strt 
+    x[i] = (i + 0.5) / 12 + yr_strt
 plt.plot(x, strh_gm[run_to_plot-1,:])
+
+
+
 plt.xlabel("year")
 plt.ylabel("metres")
 plt.title("Global mean steric height (relative to Jan 2000)")
 plt.show()
+
+#ASLAKs additions:
+#removes fishy values and saves the data for easier loading later
+
+#-----------------------
+import pandas as pd
+modelnames = pd.read_csv('cmip6_CMIP_historical_strh_gm_run_list.txt', sep = '\s+', names=['no','model','run'], index_col='no')
+
+t = x
+steric = strh_gm
+steric[-1,-1] = np.nan
+
+#remove fishy first values:
+for no in range(steric.shape[0]):
+    ixfirst = np.argmax(~np.isnan(steric[no,:]))
+    if np.abs(steric[no,ixfirst]-steric[no,ixfirst+1])>0.1:
+        steric[no,ixfirst] = np.nan
+
+#remove sudden outliers:
+from scipy.ndimage import median_filter
+m = median_filter(steric,size=(5,1))
+steric = np.where(np.abs(steric-m)>1, m, steric)
+
+
+#------------------SAVE IT-------------------
+
+np.savez('historical_cleaned.npz',t, steric, modelnames) # this format is convenient to load in python
+
+#also save as text file
+headers = modelnames.iloc[:,0:2].agg('/'.join, axis=1).to_list()
+headers.insert(0,'time')
+
+d=np.append(np.array([t]).T, steric.T, axis=1)
+
+np.savetxt('historical_cleaned.txt', d, header=' '.join(headers) )
+
