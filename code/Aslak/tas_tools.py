@@ -53,3 +53,4 @@ if __name__ == "__main__":
     # this is some test code:
     d = load_tas()
     import matplotlib.pyplot as plt
+    plt.plot(d)
