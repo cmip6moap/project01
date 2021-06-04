@@ -28,11 +28,16 @@ def extractRateVsT(
     region="",
     risk_averse=False,
     targetperiods=np.array([[2016, 2050], [2051, 2100]]),
+    loadifavailable = True,
 ):
 
     filename = "../../data/processed_data/ExtractedFromTamsin/{}_{}_risk{}.csv".format(
         ice_source, region, risk_averse
     )
+
+    if loadifavailable & (len(glob.glob(filename))>0):
+        output = pd.read_csv(filename)
+        return output
 
     if risk_averse:
         folder = "../../data/raw_data/Landice-Edwards21/proj_S11_RISK_TIMESERIES"
@@ -113,6 +118,8 @@ def extractRateVsT(
 def plotScatter(output):
     ice_source = output.iloc[0].ice_source
     region = output.iloc[0].region
+    if len(region)<2:
+        region = None
     G = output.groupby(["scenario", "startyr", "endyr"])
     for groupix, g in G:
         scenario = groupix[0]
@@ -133,6 +140,7 @@ def plotScatter(output):
         sheet_name = region
     else:
         sheet_name = ice_source
+    print(sheet_name)
     comparison_data = pd.read_excel(
         "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
         sheet_name=sheet_name,
@@ -161,11 +169,11 @@ Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=False)
 EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=False)
 WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=False)
 
-EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
-WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=True)
-Pen = extractRateVsT(ice_source="AIS", region="Pen", risk_averse=True)
-AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=True)
+# EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
+# WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=True)
+# Pen = extractRateVsT(ice_source="AIS", region="Pen", risk_averse=True)
+# AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=True)
 
-plotScatter(AIS)
+plotScatter(Pen)
 
 
