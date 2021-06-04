@@ -48,39 +48,39 @@ for scenario in scenarios:
     plt.show()
 
 
-    #ASLAKs additions:
-    #removes fishy values and saves the data for easier loading later
+    # #ASLAKs additions:
+    # #removes fishy values and saves the data for easier loading later
 
-    #-----------------------
-    import pandas as pd
-    modelnames = pd.read_csv(f'cmip6_ScenarioMIP_{expr}_strh_gm_run_list.txt', sep = '\s+', names=['no','model','run'], index_col='no')
+    # #-----------------------
+    # import pandas as pd
+    # modelnames = pd.read_csv(f'cmip6_ScenarioMIP_{expr}_strh_gm_run_list.txt', sep = '\s+', names=['no','model','run'], index_col='no')
 
-    t = x
-    steric = strh_gm
-    steric[-1,-1] = np.nan
+    # t = x
+    # steric = strh_gm
+    # steric[-1,-1] = np.nan
 
-    #remove fishy first values:
-    for no in range(steric.shape[0]):
-        ixfirst = np.argmax(~np.isnan(steric[no,:]))
-        if np.abs(steric[no,ixfirst]-steric[no,ixfirst+1])>0.1:
-            steric[no,ixfirst] = np.nan
+    # #remove fishy first values:
+    # for no in range(steric.shape[0]):
+    #     ixfirst = np.argmax(~np.isnan(steric[no,:]))
+    #     if np.abs(steric[no,ixfirst]-steric[no,ixfirst+1])>0.1:
+    #         steric[no,ixfirst] = np.nan
 
-    #remove sudden outliers:
-    from scipy.ndimage import median_filter
-    m = median_filter(steric,size=(5,1))
-    steric = np.where(np.abs(steric-m)>1, m, steric)
-
-
-    #------------------SAVE IT-------------------
+    # #remove sudden outliers:
+    # from scipy.ndimage import median_filter
+    # m = median_filter(steric,size=(5,1))
+    # steric = np.where(np.abs(steric-m)>1, m, steric)
 
 
-    np.savez(f'{scenario}_cleaned.npz',t, steric, modelnames) # this format is convenient to load in python
+    # #------------------SAVE IT-------------------
 
-    #also save as text file
-    headers = modelnames.iloc[:,0:2].agg('/'.join, axis=1).to_list()
-    headers.insert(0,'time')
 
-    d=np.append(np.array([t]).T, steric.T, axis=1)
+    # np.savez(f'cleaned_{scenario}.npz',t, steric, modelnames) # this format is convenient to load in python
 
-    np.savetxt(f'{scenario}_cleaned.txt', d, header=' '.join(headers) )
+    # #also save as text file
+    # headers = modelnames.iloc[:,0:2].agg('/'.join, axis=1).to_list()
+    # headers.insert(0,'time')
+
+    # d=np.append(np.array([t]).T, steric.T, axis=1)
+
+    # np.savetxt(f'cleaned_{scenario}.txt', d, header=' '.join(headers) )
 

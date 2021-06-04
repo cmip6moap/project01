@@ -163,4 +163,4 @@ WAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
 Pen = extractRateVsT(ice_source="AIS", region="Pen", risk_averse=True)
 AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=True)
 
-# plotScatter(output)
+plotScatter(AIS)
