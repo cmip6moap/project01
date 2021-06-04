@@ -5,7 +5,8 @@ Aslak Grinsted 2021 during CMIP6moap
 import numpy as np
 import pandas as pd
 import re
-
+import os.path
+import glob
 
 
 def parse_run(run):
@@ -28,9 +29,15 @@ def load_tas(model= 'ACCESS-CM2', scenario='ssp126', run='r1i1p1f1'):
     r,i,p,f = parse_run(run)
 
     if scenario == 'historical':
-        1/0
+        scenario = '*'
+        print('warning: am i usng the right one?')
+
     r = r.zfill(2)
     filename = f'{folder}/global_tas_mon_{model}_{scenario}_i{i}p{p}f{f}_{r}.dat'
+    if not os.path.isfile(filename):
+        print(f'file not found: {filename} - trying fallback *_ave')
+        filename = f'{folder}/global_tas_mon_{model}_{scenario}_i{i}p{p}f{f}_ave.dat'
+        filename = glob.glob(filename)[0]
 
     df = pd.read_csv(filename, comment='#', sep='\s+', names=['year','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'], index_col='year')
     return df

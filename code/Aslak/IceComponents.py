@@ -26,7 +26,7 @@ def extractRateVsT(
     ice_source="Glaciers",
     region="",
     risk_averse=False,
-    targetperiods=np.array([[2016, 2050], [2050, 2100]]),
+    targetperiods=np.array([[2016, 2050], [2051, 2100]]),
 ):
 
     filename = "../../data/processed_data/ExtractedFromTamsin/{}_{}_risk{}.csv".format(
