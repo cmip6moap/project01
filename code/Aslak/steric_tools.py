@@ -12,6 +12,7 @@ import pandas as pd
 from scipy.ndimage import median_filter  # used for outlier removal
 
 
+
 def load_gm_steric(scenario = 'historical'):
 
     folder = '../../data/raw_data/CMIP6 steric SSH'
@@ -67,14 +68,12 @@ def load_gm_steric(scenario = 'historical'):
     m = median_filter(steric,size=(5,1))
     steric = np.where(np.abs(steric-m)>1, m, steric)
 
-    return {'t': t, 'steric': steric.T, 'modelruns': modelnames}
+    return (t, steric.T, modelnames)
 
 
 
 if __name__ == "__main__":
     # this is some test code:
-    h = load_gm_steric('historical')
-    f = load_gm_steric('SSP126')
+    t,z,names = load_gm_steric('historical')
     import matplotlib.pyplot as plt
-    plt.plot(h['t'],h['steric'])
-    plt.plot(f['t'],f['steric'])
+    plt.plot(t,z)
