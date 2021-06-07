@@ -28,7 +28,7 @@ def extractRateVsT(
     region="",
     risk_averse=False,
     targetperiods=np.array([[2016, 2050], [2051, 2100]]),
-    loadifavailable = True,
+    loadifavailable = False,
 ):
 
     filename = "../../data/processed_data/ExtractedFromTamsin/{}_{}_risk{}.csv".format(
@@ -84,7 +84,7 @@ def extractRateVsT(
 
         for sampleix, sample in tqdm(Q):
             t = sample.year.values
-            T = sample.GSAT.values + T2015  # Apply base-line correction
+            T = sample.GSAT.values + T2015  # Apply base-line correction (Tamsin says her numbers are relative to 2015. )
 
             SLE = (
                 savgol_filter(sample.SLE.values/100, 15, 1)
@@ -162,17 +162,17 @@ def plotScatter(output):
     plt.ylabel("dSdt (m/century)")
     plt.legend()
 
-AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=False)
-GrIS = extractRateVsT(ice_source="GrIS", region="", risk_averse=False)
-Glaciers = extractRateVsT(ice_source="Glaciers", region="", risk_averse=False)
-Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=False)
-EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=False)
-WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=False)
+# AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=False)
+# GrIS = extractRateVsT(ice_source="GrIS", region="", risk_averse=False)
+# Glaciers = extractRateVsT(ice_source="Glaciers", region="", risk_averse=False)
+# Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=False)
+# EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=False)
+# WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=False)
 
-# EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
-# WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=True)
-# Pen = extractRateVsT(ice_source="AIS", region="Pen", risk_averse=True)
-# AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=True)
+EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
+WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=True)
+Pen = extractRateVsT(ice_source="AIS", region="Pen", risk_averse=True)
+AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=True)
 
 plotScatter(Pen)
 
