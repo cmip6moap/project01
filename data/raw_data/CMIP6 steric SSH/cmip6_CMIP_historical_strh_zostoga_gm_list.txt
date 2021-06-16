@@ -68,65 +68,68 @@
  68  E3SM-1-1-ECA              r1i1p1f1_gr    -0.0146  0.0222
  69  EC-Earth3-CC              r1i1p1f1_gn    -0.0549  0.0227
  70  EC-Earth3-Veg             r1i1p1f1_gn    -0.0742  0.0278
- 71  FGOALS-f3-L               r1i1p1f1_gn    -0.0662  0.3394
- 72  FIO-ESM-2-0               r1i1p1f1_gn    -0.0439  0.0254
- 73  GFDL-CM4                  r1i1p1f1_gn    -0.0835  0.0283
- 74  GFDL-ESM4                 r1i1p1f1_gn    -0.0454  0.0212
- 75  GISS-E2-1-G               r10i1p1f1_gn   -0.0342  0.0242
- 76  GISS-E2-1-G               r1i1p1f1_gn    -0.0371  0.0212
- 77  GISS-E2-1-G               r2i1p1f1_gn    -0.0425  0.0190
- 78  GISS-E2-1-G               r3i1p1f1_gn    -0.0410  0.0244
- 79  GISS-E2-1-G               r4i1p1f1_gn    -0.0374  0.0225
- 80  GISS-E2-1-G               r5i1p1f1_gn    -0.0400  0.0212
- 81  GISS-E2-1-G               r6i1p1f1_gn    -0.0410  0.0198
- 82  GISS-E2-1-G               r7i1p1f1_gn    -0.0376  0.0215
- 83  GISS-E2-1-G               r8i1p1f1_gn    -0.0417  0.0229
- 84  GISS-E2-1-G               r9i1p1f1_gn    -0.0369  0.0200
- 85  GISS-E2-1-G-CC            r1i1p1f1_gn    -0.0342  0.0205
- 86  HadGEM3-GC31-LL           r1i1p1f3_gn    -0.0359  0.0288
- 87  HadGEM3-GC31-LL           r2i1p1f3_gn    -0.0437  0.0256
- 88  HadGEM3-GC31-LL           r3i1p1f3_gn    -0.0320  0.0264
- 89  HadGEM3-GC31-LL           r4i1p1f3_gn    -0.0361  0.0247
- 90  HadGEM3-GC31-LL           r5i1p1f3_gn    -0.0342  0.0276
- 91  HadGEM3-GC31-MM           r1i1p1f3_gn    -0.0776  0.0281
- 92  HadGEM3-GC31-MM           r2i1p1f3_gn    -0.0818  0.0273
- 93  HadGEM3-GC31-MM           r3i1p1f3_gn    -0.0840  0.0266
- 94  HadGEM3-GC31-MM           r4i1p1f3_gn    -0.0771  0.0303
- 95  IPSL-CM5A2-INCA           r1i1p1f1_gn    -0.0620  0.0232
- 96  IPSL-CM6A-LR              r1i1p1f1_gn    -0.0359  0.0166
- 97  IPSL-CM6A-LR              r2i1p1f1_gn    -0.0332  0.0203
- 98  IPSL-CM6A-LR              r3i1p1f1_gn    -0.0356  0.0190
- 99  IPSL-CM6A-LR              r4i1p1f1_gn    -0.0288  0.0222
-100  IPSL-CM6A-LR              r5i1p1f1_gn    -0.0300  0.0222
-101  IPSL-CM6A-LR              r6i1p1f1_gn    -0.0334  0.0222
-102  IPSL-CM6A-LR              r7i1p1f1_gn    -0.0354  0.0190
-103  IPSL-CM6A-LR              r8i1p1f1_gn    -0.0344  0.0212
-104  IPSL-CM6A-LR              r9i1p1f1_gn    -0.0361  0.0242
-105  IPSL-CM6A-LR-INCA         r1i1p1f1_gn    -0.0312  0.0176
-106  MCM-UA-1-0                r1i1p1f1_gn    -0.0681  0.0278
-107  MIROC6                    r1i1p1f1_gm    -0.0520  0.0178
-108  MPI-ESM-1-2-HAM           r1i1p1f1_gn    -0.0220  0.0217
-109  MPI-ESM1-2-HR             r1i1p1f1_gn    -0.0461  0.0220
-110  MPI-ESM1-2-LR             r1i1p1f1_gn    -0.0500  0.0212
-111  MRI-ESM2-0                r1i1p1f1_gm    -0.0500  0.0240
-112  NESM3                     r1i1p1f1_gn    -0.0193  0.0208
-113  NorESM2-LM                r1i1p1f1_gm    -0.0147  0.0172
-114  NorESM2-MM                r1i1p1f1_gm    -0.0058  0.0302
-115  SAM0-UNICON               r1i1p1f1_gn    -0.0159  0.0186
-116  UKESM1-0-LL               r10i1p1f2_gn   -0.0173  0.0244
-117  UKESM1-0-LL               r11i1p1f2_gn   -0.0129  0.0210
-118  UKESM1-0-LL               r12i1p1f2_gn   -0.0149  0.0217
-119  UKESM1-0-LL               r13i1p1f2_gn   -0.0222  0.0364
-120  UKESM1-0-LL               r16i1p1f2_gn   -0.0156  0.0232
-121  UKESM1-0-LL               r17i1p1f2_gn   -0.0166  0.0254
-122  UKESM1-0-LL               r18i1p1f2_gn   -0.0122  0.0291
-123  UKESM1-0-LL               r19i1p1f2_gn   -0.0127  0.0227
-124  UKESM1-0-LL               r1i1p1f2_gn    -0.0168  0.0239
-125  UKESM1-0-LL               r2i1p1f2_gn    -0.0127  0.0225
-126  UKESM1-0-LL               r3i1p1f2_gn    -0.0137  0.0217
-127  UKESM1-0-LL               r4i1p1f2_gn    -0.0161  0.0220
-128  UKESM1-0-LL               r5i1p1f3_gn    -0.0156  0.0249
-129  UKESM1-0-LL               r6i1p1f3_gn    -0.0103  0.0261
-130  UKESM1-0-LL               r7i1p1f3_gn    -0.0117  0.0193
-131  UKESM1-0-LL               r8i1p1f2_gn    -0.0161  0.0254
-132  UKESM1-0-LL               r9i1p1f2_gn    -0.0146  0.0261
+ 71  FGOALS-f3-L               r1i1p1f1_gn    -0.0662  0.0239
+ 72  FGOALS-g3                 r1i1p1f1_gn    -0.0095  0.2151
+ 73  FIO-ESM-2-0               r1i1p1f1_gn    -0.0439  0.0254
+ 74  GFDL-CM4                  r1i1p1f1_gn    -0.0835  0.0283
+ 75  GFDL-ESM4                 r1i1p1f1_gn    -0.0454  0.0212
+ 76  GISS-E2-1-G               r10i1p1f1_gn   -0.0342  0.0242
+ 77  GISS-E2-1-G               r1i1p1f1_gn    -0.0371  0.0212
+ 78  GISS-E2-1-G               r2i1p1f1_gn    -0.0425  0.0190
+ 79  GISS-E2-1-G               r3i1p1f1_gn    -0.0410  0.0244
+ 80  GISS-E2-1-G               r4i1p1f1_gn    -0.0374  0.0225
+ 81  GISS-E2-1-G               r5i1p1f1_gn    -0.0400  0.0212
+ 82  GISS-E2-1-G               r6i1p1f1_gn    -0.0410  0.0198
+ 83  GISS-E2-1-G               r7i1p1f1_gn    -0.0376  0.0215
+ 84  GISS-E2-1-G               r8i1p1f1_gn    -0.0417  0.0229
+ 85  GISS-E2-1-G               r9i1p1f1_gn    -0.0369  0.0200
+ 86  GISS-E2-1-G-CC            r1i1p1f1_gn    -0.0342  0.0205
+ 87  HadGEM3-GC31-LL           r1i1p1f3_gn    -0.0359  0.0288
+ 88  HadGEM3-GC31-LL           r2i1p1f3_gn    -0.0437  0.0256
+ 89  HadGEM3-GC31-LL           r3i1p1f3_gn    -0.0320  0.0264
+ 90  HadGEM3-GC31-LL           r4i1p1f3_gn    -0.0361  0.0247
+ 91  HadGEM3-GC31-LL           r5i1p1f3_gn    -0.0342  0.0276
+ 92  HadGEM3-GC31-MM           r1i1p1f3_gn    -0.0776  0.0281
+ 93  HadGEM3-GC31-MM           r2i1p1f3_gn    -0.0818  0.0273
+ 94  HadGEM3-GC31-MM           r3i1p1f3_gn    -0.0840  0.0266
+ 95  HadGEM3-GC31-MM           r4i1p1f3_gn    -0.0771  0.0303
+ 96  INM-CM4-8                 r1i1p1f1_gr1   -0.0093  0.1013
+ 97  INM-CM5-0                 r1i1p1f1_gr1   -0.0088  0.0925
+ 98  IPSL-CM5A2-INCA           r1i1p1f1_gn    -0.0620  0.0232
+ 99  IPSL-CM6A-LR              r1i1p1f1_gn    -0.0359  0.0166
+100  IPSL-CM6A-LR              r2i1p1f1_gn    -0.0332  0.0203
+101  IPSL-CM6A-LR              r3i1p1f1_gn    -0.0356  0.0190
+102  IPSL-CM6A-LR              r4i1p1f1_gn    -0.0288  0.0222
+103  IPSL-CM6A-LR              r5i1p1f1_gn    -0.0300  0.0222
+104  IPSL-CM6A-LR              r6i1p1f1_gn    -0.0334  0.0222
+105  IPSL-CM6A-LR              r7i1p1f1_gn    -0.0354  0.0190
+106  IPSL-CM6A-LR              r8i1p1f1_gn    -0.0344  0.0212
+107  IPSL-CM6A-LR              r9i1p1f1_gn    -0.0361  0.0242
+108  IPSL-CM6A-LR-INCA         r1i1p1f1_gn    -0.0312  0.0176
+109  MCM-UA-1-0                r1i1p1f1_gn    -0.0681  0.0278
+110  MIROC6                    r1i1p1f1_gm    -0.0520  0.0178
+111  MPI-ESM-1-2-HAM           r1i1p1f1_gn    -0.0220  0.0217
+112  MPI-ESM1-2-HR             r1i1p1f1_gn    -0.0461  0.0220
+113  MPI-ESM1-2-LR             r1i1p1f1_gn    -0.0500  0.0212
+114  MRI-ESM2-0                r1i1p1f1_gm    -0.0500  0.0240
+115  NESM3                     r1i1p1f1_gn    -0.0193  0.0208
+116  NorESM2-LM                r1i1p1f1_gm    -0.0147  0.0172
+117  NorESM2-MM                r1i1p1f1_gm    -0.0058  0.0302
+118  SAM0-UNICON               r1i1p1f1_gn    -0.0159  0.0186
+119  UKESM1-0-LL               r10i1p1f2_gn   -0.0173  0.0244
+120  UKESM1-0-LL               r11i1p1f2_gn   -0.0129  0.0210
+121  UKESM1-0-LL               r12i1p1f2_gn   -0.0149  0.0217
+122  UKESM1-0-LL               r13i1p1f2_gn   -0.0222  0.0364
+123  UKESM1-0-LL               r16i1p1f2_gn   -0.0156  0.0232
+124  UKESM1-0-LL               r17i1p1f2_gn   -0.0166  0.0254
+125  UKESM1-0-LL               r18i1p1f2_gn   -0.0122  0.0291
+126  UKESM1-0-LL               r19i1p1f2_gn   -0.0127  0.0227
+127  UKESM1-0-LL               r1i1p1f2_gn    -0.0168  0.0239
+128  UKESM1-0-LL               r2i1p1f2_gn    -0.0127  0.0225
+129  UKESM1-0-LL               r3i1p1f2_gn    -0.0137  0.0217
+130  UKESM1-0-LL               r4i1p1f2_gn    -0.0161  0.0220
+131  UKESM1-0-LL               r5i1p1f3_gn    -0.0156  0.0249
+132  UKESM1-0-LL               r6i1p1f3_gn    -0.0103  0.0261
+133  UKESM1-0-LL               r7i1p1f3_gn    -0.0117  0.0193
+134  UKESM1-0-LL               r8i1p1f2_gn    -0.0161  0.0254
+135  UKESM1-0-LL               r9i1p1f2_gn    -0.0146  0.0261
