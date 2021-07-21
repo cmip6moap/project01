@@ -31,9 +31,11 @@ def extractRateVsT(
     loadifavailable = False,
 ):
 
-    filename = "../../data/processed_data/ExtractedFromTamsin/{}_{}_risk{}.csv".format(
-        ice_source, region, risk_averse
-    )
+    shortname = ice_source
+    if region:
+        shortname = region
+
+    filename = f"../../data/processed_data/ExtractedFromTamsin/{shortname}_risk{risk_averse}.csv"
 
     if loadifavailable & (len(glob.glob(filename))>0):
         output = pd.read_csv(filename)
@@ -162,16 +164,16 @@ def plotScatter(output):
     plt.ylabel("dSdt (m/century)")
     plt.legend()
 
-# AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=False)
-# GrIS = extractRateVsT(ice_source="GrIS", region="", risk_averse=False)
-# Glaciers = extractRateVsT(ice_source="Glaciers", region="", risk_averse=False)
-# Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=False)
-# EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=False)
-# WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=False)
+AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=False)
+GrIS = extractRateVsT(ice_source="GrIS", region="", risk_averse=False)
+Glaciers = extractRateVsT(ice_source="Glaciers", region="", risk_averse=False)
+Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=False)
+EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=False)
+WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=False)
 
 EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
 WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=True)
-Pen = extractRateVsT(ice_source="AIS", region="Pen", risk_averse=True)
+Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=True)
 AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=True)
 
 plotScatter(Pen)
