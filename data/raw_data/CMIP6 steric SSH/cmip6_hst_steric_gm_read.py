@@ -30,7 +30,7 @@ tmp.fromfile(fid, b//4+1)
 tmp = tmp[1:]
 tmp = np.asarray(tmp)
 strh_gm = np.reshape(tmp, (n_runs, n_mnths), 'F')
-strh_gm[strh_gm==0] = "NaN"
+strh_gm[strh_gm<-1.7e7] = "NaN"
 for i in range(n_runs): # reference to Jan 2000
   strh_gm[i,:] = strh_gm[i,:] - strh_gm[i,n_ref]
 

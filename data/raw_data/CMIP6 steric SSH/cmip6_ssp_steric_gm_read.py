@@ -17,7 +17,7 @@ for scenario in scenarios:
     yr_ref = 2020
     n_ref = 12 * (yr_ref - yr_strt) + 1
 
-    fn = "cmip6_" + mip + "_" + expr + "_strh_gm.dat"
+    fn = "cmip6_" + mip + "_" + expr + "_strh_zostoga_gm.dat"
     print(fn)
     fid = open(fn, mode = 'rb')
     a = array.array("i")
@@ -33,7 +33,7 @@ for scenario in scenarios:
     tmp = tmp[1:]
     tmp = np.asarray(tmp)
     strh_gm = np.reshape(tmp, (n_runs, n_mnths), 'F')
-    strh_gm[strh_gm==0] = "NaN"
+    strh_gm[strh_gm<-1.7e7] = "NaN"
     for i in range(n_runs): # reference to Jan 2020
       strh_gm[i,:] = strh_gm[i,:] - strh_gm[i,n_ref]
 
