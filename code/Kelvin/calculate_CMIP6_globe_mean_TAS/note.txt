@@ -1,0 +1,3 @@
+These are the scripts for the CMIP6 global mean TAS calculation.
+
+==> I used a very silly way to retrive the CMIP6 path on JASMIN...

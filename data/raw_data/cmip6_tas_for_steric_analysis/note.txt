@@ -1,0 +1,11 @@
+These are the CMIP6 global mean TAS monthly timeseries (RAW)
+
+The scripts are in the directory "code/Kelvin"
+
+A very rough check has been done and the ensemble mean of the TAS time series looks ok.
+
+There are some files missing files because the source TAS files are not found on JASMIN.
+==> I will download those files from elsewhere if they are available.
+
+IMPORTANT!
+==> You NEED to set 0 to nan.
