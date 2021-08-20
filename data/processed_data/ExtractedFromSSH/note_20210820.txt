@@ -1,0 +1,21 @@
+## By Kelvin Ng
+## Corresponding file : steric_standard_format_20210820.csv
+
+Unit: dSdt = mm/year
+
+Temperature baseline period : 1995-2014 (inclusive)
+
+Scenario: historical, ssp126, ssp245, ssp585
+
+Period (inclusive):
+
+-->Historical: [1850-1900], [1900-1950], [1992-2014]
+
+-->ssp: [2016-2050], [2051-2100]
+
+Note:
+Quick check has been done.
+--> Removed entries with unrealistical values (e.g. values >10^5 m are removed)
+--> Removed dubious entries in dSdt
+
+Only performe calculation where historical TAS is available.
