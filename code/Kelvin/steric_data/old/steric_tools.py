@@ -15,7 +15,7 @@ from scipy.ndimage import median_filter  # used for outlier removal
 
 def load_gm_steric(scenario = 'historical'):
 
-    folder = 'project01/data/raw_data/CMIP6 steric SSH'
+    folder = '../../../../data/raw_data/CMIP6 steric SSH'
     expr = scenario.lower()
     if expr == 'historical':
         mip = "CMIP"
@@ -46,8 +46,8 @@ def load_gm_steric(scenario = 'historical'):
     tmp = np.asarray(tmp)
     strh_gm = np.reshape(tmp, (n_runs, n_mnths), 'F')
     strh_gm[strh_gm==0] = np.nan
-    for i in range(n_runs): # reference to Jan 2000
-      strh_gm[i,:] = strh_gm[i,:] - strh_gm[i,n_ref]
+#    for i in range(n_runs): # reference to Jan 2000
+#      strh_gm[i,:] = strh_gm[i,:] - strh_gm[i,n_ref]
 
     x = (np.arange(n_mnths) + .5)/12 + yr_strt
 
