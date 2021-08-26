@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import hadcrut5
 import steric_tools
 import tas_tools
+import re
 
 
 
@@ -25,27 +26,40 @@ output = pd.DataFrame(
 )
 
 scenarios = ['historical','SSP126', 'SSP245', 'SSP585']
+Tbaselines={}
 for scenario in scenarios:
 
 
     t,Z,names = steric_tools.load_gm_steric(scenario)
 
-
-
     for col in range(Z.shape[1]):
         z = Z[:,col]
-        try:
-            n = names.loc[col+1]
-        except:
+        # try:
+        n = names.loc[col+1]
+        # except:
+        #     continue
+        if np.isnan(z).all():
+            print(f'ALL NaNs? {n.model} {n.run}')
             continue
 
-        try:
-            tas = tas_tools.load_tas(model = n.model, scenario = scenario, run = n.run)
-        except:
-            print(f'MISSING\n{n}\n')
+
+        tas = tas_tools.load_tas(model = n.model, scenario = scenario, run = n.run)
+        if not isinstance(tas,pd.DataFrame):
             continue
 
-        Tbase = np.mean(tas.loc[1995:2014].values)
+        base_key=f'{n.model},{n.run}'
+        if scenario == 'historical':
+            Tbase = np.mean(tas.loc[1995:2014].values)
+            Tbaselines[base_key] = Tbase
+        else:
+            if not base_key in Tbaselines:
+                base_key = re.sub('r\d+','r1',base_key)
+                #base_key = base_key.replace('EC-Earth3,','EC-Earth3-CC,')
+                #base_key = base_key.replace('EC-Earth3-Veg-LR,','EC-Earth3-Veg,')
+            if not base_key in Tbaselines:
+                print(f'SKIPPED: missing historical run for {base_key}')
+                continue
+            Tbase = Tbaselines[base_key]
 
         for periodix in range(targetperiods.shape[0]):
             period = targetperiods[periodix,:]
@@ -67,6 +81,7 @@ for scenario in scenarios:
 
             #calculate
             Tavg = np.mean(tas.loc[period[0]:period[-1]].values) - Tbase
+
 
             newrow = {
                 "model": n.model,
