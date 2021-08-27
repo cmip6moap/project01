@@ -63,7 +63,12 @@ for name, group in groups:
     output.loc[output.shape[0]] = newrow #EXTREMELY SLOW!
 
 
-#TODO: save it
+
+
+fout = '../../data/processed_data/TSLS_estimates/tsls_steric.csv'
+output.to_csv(fout)
+
+
 
 
 
@@ -74,30 +79,5 @@ for name, group in groups:
 #         continue
 #     plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
 # plt.legend()
-
-
-
-tfolder = '../../data/processed_data/ExtractedFromTamsin/'
-ice = {'WAIS': None,
-        'EAIS': None,
-        'PEN': None,
-        'Glaciers': None,
-        'GrIS': None}
-
-risk = False
-
-
-for tfile in ice:
-     fname = f'{tfolder}{tfile}_risk{risk}.csv'
-     if not os.path.isfile(fname):
-         fname = fname.replace('True','False')
-     ice[tfile] = pd.read_csv(fname)
-
-
-keys = ice['PEN'].sample
-
-out
-
-for tfile in ice:
 
 

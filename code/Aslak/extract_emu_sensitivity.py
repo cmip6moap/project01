@@ -77,7 +77,15 @@ for tfile in ice:
         output.loc[output.shape[0]] = newrow #EXTREMELY SLOW!
 
 
-df=output[output.ice_component=='EAIS']
+
+fout = '../../data/processed_data/TSLS_estimates/tsls_ice_emulator.csv'
+output.to_csv(fout)
+
+
+
+
+
+df=output[output.ice_component=='WAIS']
 for startyr, group in df.groupby('startyr'):
     bins = np.linspace(-0.005, 0.005, 50)
     #bins = np.linspace(-1, 1, 20)
