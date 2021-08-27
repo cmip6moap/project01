@@ -44,7 +44,7 @@ steric['group_id']=steric.apply(group_id,axis=1)
 
 groups = steric.groupby('group_id')
 for name, group in groups:
-    N = group.shape[1]
+    N = group.Tavg.values.shape[0]
     if N<2:
         continue
     if (group.Tavg.max()-group.Tavg.min())<0.2:

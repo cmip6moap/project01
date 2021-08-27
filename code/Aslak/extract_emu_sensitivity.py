@@ -58,7 +58,7 @@ for tfile in ice:
         sample = key[0]
         startyr = key[1]
         endyr = key[2]
-        N = group.shape[1]
+        N = group.Tavg.values.shape[0]
         if N<2:
             continue
         p = np.polyfit(group.Tavg.values,group.dSdt.values,1)
