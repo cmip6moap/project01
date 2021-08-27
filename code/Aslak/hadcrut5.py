@@ -12,6 +12,7 @@
 
 import pandas as pd
 import numpy as np
+from settings import baseline_period
 
 H = pd.read_csv(
     "../../data/raw_data/HadCRUT5/HadCRUT.5.0.1.0.analysis.ensemble_series.global.annual.csv",
@@ -20,8 +21,8 @@ H = pd.read_csv(
 T = H.filter(regex="Realization")
 C = H["Coverage uncertainty (1 sigma)"]
 
-baseline_start = 1995  # https://www.mountainresearchinitiative.org/news-page-all/129-mri-news/2357-call-for-participation-contributions-ipcc-ar6-climate-change-2021-impacts-adaptation-and-vulnerability
-baseline_end = 2014
+baseline_start = baseline_period[0]  # https://www.mountainresearchinitiative.org/news-page-all/129-mri-news/2357-call-for-participation-contributions-ipcc-ar6-climate-change-2021-impacts-adaptation-and-vulnerability
+baseline_end = baseline_period[1]
 
 
 def getTstats(startyr, endyr):

@@ -8,9 +8,7 @@ import steric_tools
 import tas_tools
 import re
 
-
-
-targetperiods = np.array([[1850,1900],[1900,1950],[1950,2000],[1992,2014],[2016,2050],[2051,2100]])
+from settings import targetperiods, baseline_period
 
 
 output = pd.DataFrame(
@@ -49,7 +47,7 @@ for scenario in scenarios:
 
         base_key=f'{n.model},{n.run}'
         if scenario == 'historical':
-            Tbase = np.mean(tas.loc[1995:2014].values)
+            Tbase = np.mean(tas.loc[baseline_period[0]:baseline_period[1]].values)
             Tbaselines[base_key] = Tbase
         else:
             if not base_key in Tbaselines:
@@ -99,42 +97,3 @@ fout = '../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv'
 output.to_csv(fout)
 
 
-
-scenariocolors = {
-    "SSP119": "#e6194B",
-    "SSP126": "#3cb44b",
-    "SSP245": "#ffe119",
-    "SSP370": "#4363d8",
-    "SSP585": "#f58231",
-    "SSPNDC": "#42d4f4",
-    "historical": "#42d4f4"
-}
-
-
-#plt.scatter(output.Tavg, output.dSdt*100, c=output.scenario.map(scenariocolors),s =5)
-h= plt.scatter(output.Tavg, output.dSdt*100, c=output.startyr,s =5)
-plt.colorbar(h)
-G=output.groupby(['scenario','startyr']).agg('median')
-plt.scatter(G.Tavg, G.dSdt*100,c= 'k')
-
-plt.xlabel('Temporal average of GMST anomaly (K)')
-plt.ylabel('dSSH/dt (m/century)')
-
-
-# ------------ PLOT comparison data --------------
-sheet_name = 'Steric'
-comparison_data = pd.read_excel(
-    "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
-    sheet_name=sheet_name,
-    skiprows=3,
-)
-for ix, row in comparison_data.iterrows():
-    Trow = hadcrut5.getTstats(row["Period start"], row["Period end"])
-    plt.errorbar(
-        Trow["Tanom"],
-        row["Rate"],
-        xerr=Trow["sigmaT"],
-        yerr=row["RateSigma"],
-        c="r",
-    )
-    plt.text(Trow["Tanom"], row["Rate"] - row["RateSigma"], row["Name"],c='r')
