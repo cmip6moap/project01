@@ -1,0 +1,103 @@
+# -*- coding: utf-8 -*-
+
+
+import numpy as np
+from glob import glob
+import pandas as pd
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+import corner
+import hadcrut5
+import re
+
+
+
+steric = pd.read_csv('../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv')
+steric['setup'] = steric.run.apply(lambda s: re.findall(r'r\d+i\d+(p\d+)',s)[0])
+steric = steric[steric.dSdt.notna()]
+steric = steric[steric.Tavg.notna()]
+
+steric_projections = steric[steric.scenario != 'historical']
+steric_historical = steric[steric.scenario == 'historical']
+
+output = pd.DataFrame(
+    columns=[
+        "model_key",
+        "startyr",
+        "endyr",
+        "Tmin",
+        "Tmax",
+        "Npts",
+        "TSLS",
+        "BalanceT",
+        "Intercept"
+    ]
+)
+
+def group_id(row):
+    if row.scenario == 'historical':
+        return f'{row.model}:{row.setup}:historical'
+    else:
+        return f'{row.model}:{row.setup}:{row.startyr}:{row.endyr}'
+
+steric['group_id']=steric.apply(group_id,axis=1)
+
+groups = steric.groupby('group_id')
+for name, group in groups:
+    N = group.shape[1]
+    if N<2:
+        continue
+    if (group.Tavg.max()-group.Tavg.min())<0.2:
+        continue
+    p = np.polyfit(group.Tavg.values,group.dSdt.values,1)
+    newrow= {"model_key": f'{name[0]}_{name[1]}',
+        "startyr": group.startyr.min(),
+        "endyr": group.endyr.max(),
+        "Tmin":group.Tavg.min(),
+        "Tmax":group.Tavg.max(),
+        "Npts": N,
+        "TSLS": p[0],
+        "BalanceT": -p[1]/p[0],
+        "Intercept": p[1]
+        }
+    output.loc[output.shape[0]] = newrow #EXTREMELY SLOW!
+
+
+#TODO: save it
+
+
+
+# for startyr, group in output.groupby('startyr'):
+#     bins = np.linspace(-0.005, 0.005, 20)
+#     #bins = np.linspace(-1, 1, 20)
+#     if group.shape[0]<2:
+#         continue
+#     plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
+# plt.legend()
+
+
+
+tfolder = '../../data/processed_data/ExtractedFromTamsin/'
+ice = {'WAIS': None,
+        'EAIS': None,
+        'PEN': None,
+        'Glaciers': None,
+        'GrIS': None}
+
+risk = False
+
+
+for tfile in ice:
+     fname = f'{tfolder}{tfile}_risk{risk}.csv'
+     if not os.path.isfile(fname):
+         fname = fname.replace('True','False')
+     ice[tfile] = pd.read_csv(fname)
+
+
+keys = ice['PEN'].sample
+
+out
+
+for tfile in ice:
+
+

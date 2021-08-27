@@ -147,7 +147,7 @@ for component in components:
         )
         plt.text(Trow["Tanom"], row["Rate"] - row["RateSigma"], row["Name"],c='r')
 
-    plt.ylabel(f'd{component}/dt (m/century)')
+    plt.title(f'd{component}/dt (m/century)')
     plt.xlabel(f'Tavg')
 
     plt.show()
