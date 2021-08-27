@@ -85,7 +85,7 @@ output.to_csv(fout)
 
 
 
-df=output[output.ice_component=='WAIS']
+df=output[output.ice_component=='PEN']
 for startyr, group in df.groupby('startyr'):
     bins = np.linspace(-0.005, 0.005, 50)
     #bins = np.linspace(-1, 1, 20)
@@ -93,4 +93,5 @@ for startyr, group in df.groupby('startyr'):
         continue
     plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
 plt.legend()
-
+plt.xlabel('TSLS (m/yr/K)')
+plt.title(df.iloc[0].ice_component)

@@ -50,7 +50,7 @@ for name, group in groups:
     if (group.Tavg.max()-group.Tavg.min())<0.2:
         continue
     p = np.polyfit(group.Tavg.values,group.dSdt.values,1)
-    newrow= {"model_key": f'{name[0]}_{name[1]}',
+    newrow= {"model_key": name,
         "startyr": group.startyr.min(),
         "endyr": group.endyr.max(),
         "Tmin":group.Tavg.min(),
@@ -72,12 +72,13 @@ output.to_csv(fout)
 
 
 
-# for startyr, group in output.groupby('startyr'):
-#     bins = np.linspace(-0.005, 0.005, 20)
-#     #bins = np.linspace(-1, 1, 20)
-#     if group.shape[0]<2:
-#         continue
-#     plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
-# plt.legend()
-
+for startyr, group in output.groupby('startyr'):
+    bins = np.linspace(-0.005, 0.005, 20)
+    #bins = np.linspace(-1, 1, 20)
+    if group.shape[0]<2:
+        continue
+    plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
+plt.legend()
+plt.xlabel('TSLS (m/yr/K)')
+plt.title('Steric')
 
