@@ -1,4 +1,10 @@
+"""
+This is the first step in treating the steric data files.
 
+It pairs the SSH file with the corresponding TAS file and calculates
+Tavg and dSdt for the target periods.
+
+"""
 
 import numpy as np
 import pandas as pd
