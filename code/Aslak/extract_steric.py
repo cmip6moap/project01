@@ -80,7 +80,6 @@ for scenario in scenarios:
             #calculate
             Tavg = np.mean(tas.loc[period[0]:period[-1]].values) - Tbase
 
-
             newrow = {
                 "model": n.model,
                 "run": n.run,

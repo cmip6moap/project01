@@ -9,7 +9,7 @@ scenariocolors = {
     "SSP370": "#4363d8",
     "SSP585": "#f58231",
     "SSPNDC": "#42d4f4",
-    "Historical": "#000000"
+    "HISTORICAL": "#f032e6"
 }
 
 targetperiods = np.array([[1850,1900],[1900,1950],[1950,2000],[1992,2014],[2016,2050],[2051,2100]])

@@ -39,7 +39,7 @@ def parse_run(run):
 #     df = pd.read_csv(filename, comment='#', sep='\s+', names=['year','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'], index_col='year')
 #     return df
 
-def load_tas(model= 'ACCESS-CM2', scenario='ssp126', run='r1i1p1f1', return_annual=True):
+def load_tas(model= 'ACCESS-CM2', scenario='historical', run='r1i1p1f1_gn', return_annual=True):
     folder = f'../../data/raw_data/cmip6_tas_for_steric_analysis/{scenario}'
     # r,i,p,f = parse_run(run)
     # r = r.zfill(2)
