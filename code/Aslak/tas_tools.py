@@ -1,6 +1,12 @@
 """
+
+This script contains helper functions for reading the TAS files in
+https://github.com/cmip6moap/project01/tree/main/data/raw_data/cmip6_tas_for_steric_analysis
+
 Aslak Grinsted 2021 during CMIP6moap
 """
+
+
 
 import numpy as np
 import pandas as pd

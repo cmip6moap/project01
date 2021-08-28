@@ -1,8 +1,20 @@
 """
+This script has helper functions for reading the SSH files here:
+    https://github.com/cmip6moap/project01/tree/main/data/raw_data/CMIP6%20steric%20SSH
+
+
 Based on rory binghams example code.
+
 
 Modified by Aslak Grinsted 2021
 """
+
+#
+# This is the code that can read the SSH files...
+#
+#
+#
+
 
 import csv
 import numpy as np

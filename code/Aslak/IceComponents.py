@@ -1,13 +1,25 @@
 # -*- coding: utf-8 -*-
 
 
+#
+# load the ice emulator projections and
+# calculate Tavg and dSdt for all target periods!
+#
+#
+# Note: the projections are smoothed with a SGOLAY filter because they are very unstable.
+#
+# (See this issue: https://github.com/tamsinedwards/emulandice/issues/2)
+#
+#
+
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import glob
 import re
 import hadcrut5
-import sgolay
+#import sgolay
 from tqdm import tqdm
 from scipy.signal import savgol_filter
 from settings import baseline_period, targetperiods

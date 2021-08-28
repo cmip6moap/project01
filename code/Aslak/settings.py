@@ -2,6 +2,7 @@
 
 import numpy as np
 
+#we want a consistent set of colors for the different plots. So i've made that a setting...
 scenariocolors = {
     "SSP119": "#e6194B",
     "SSP126": "#3cb44b",

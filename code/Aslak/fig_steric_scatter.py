@@ -1,9 +1,10 @@
 
 
-
-
-
-
+#
+# load and plot Tavg-vs-dSdt calculated by extract_steric.py
+#
+# Aslak Grinsted 2021
+#
 
 import numpy as np
 import pandas as pd
@@ -14,7 +15,9 @@ from misc_tools import confidence_ellipse
 
 
 df = pd.read_csv('../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv')
-df = df.dropna()
+df = df.dropna() # there are some NaNs. Maybe due to incomplete temporal coverage?
+#TODO: look into why there are nans!
+
 
 G = df.groupby(["scenario", "startyr", "endyr"])
 for groupix, g in G:

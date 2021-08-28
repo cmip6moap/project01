@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+#
+# load and plot Tavg-vs-dSdt calculated by IceComponents.py
+#
+# Aslak Grinsted 2021
+#
 
 
 import numpy as np
@@ -13,6 +18,8 @@ import re
 import os
 from settings import scenariocolors
 from misc_tools import confidence_ellipse
+
+
 
 
 tfolder = '../../data/processed_data/ExtractedFromTamsin/'

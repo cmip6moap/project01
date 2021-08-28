@@ -4,9 +4,6 @@
 #
 # HadCRUT is nice for this because they provide an ensemble of different temperatures
 #
-# The Grinsted et al. 2021 used hadcrut4. This has been updated to HadCRUT5.
-#
-# TODO: decide on baseline, and decide on
 #
 # Aslak Grinsted 2021
 
