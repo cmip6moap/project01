@@ -61,6 +61,7 @@ def load_tas(model= 'ACCESS-CM2', scenario='historical', run='r1i1p1f1_gn', retu
         print(f'file not found: {filename}')
         return None
     df = pd.read_csv(filename)
+    df.gm_tas.replace({0: np.nan})
     df['month'] = df.time % 100
     df['year'] = ((df.time-df.month)/100).astype(int)
     if return_annual:

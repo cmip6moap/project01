@@ -1,5 +1,17 @@
 # -*- coding: utf-8 -*-
+"""
+this is step 2 in the steric anaysis.
 
+
+This groups all the dSdt vs Tavg values by "model",
+and makes a regression for each in order to obtain
+the steric sensitivity to warming.
+
+This is done for each target period.
+The historical period is treated somewhat differently because there are not mulitple scenarios for the historical.
+
+
+"""
 
 import numpy as np
 from glob import glob
