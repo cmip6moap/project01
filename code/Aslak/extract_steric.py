@@ -86,6 +86,16 @@ for scenario in scenarios:
             #calculate
             Tavg = np.mean(tas.loc[period[0]:period[-1]].values) - Tbase
 
+            if np.isnan(Tavg):
+                print(f'Tavg is NaN for {n.model} {n.run} {period[0]}-{period[-1]}')
+                continue
+            if np.isnan(dSdt):
+                print(f'dSdt is NaN for {n.model} {n.run} {period[0]}-{period[-1]}')
+                continue
+
+
+
+
             newrow = {
                 "model": n.model,
                 "run": n.run,
@@ -95,6 +105,7 @@ for scenario in scenarios:
                 "Tavg": Tavg,
                 "dSdt": dSdt,
             }
+
             output.loc[output.shape[0]] = newrow
 
 
