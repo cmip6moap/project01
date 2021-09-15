@@ -1,0 +1,53 @@
+Mimic Slangen et al. 2016 (NCC) Figure S2 with CMIP6 steric data
+
+Input data:
+	--> CMIP6 steric data (by Rory Bingham)
+	--> Historical observations (Frederikse et al. 2020 Nature)
+
+Require:
+	--> steric_tools.py (by Aslak Grinsted)
+
+*************************************************************************************************************
+
+Outputs:
+
+raw_stat.csv : Store raw data for the Slangen et al. 2016 (NCC) Figure S2 calculation
+	--> model : Model name [Same as steric namelist]
+	--> run : Variants [Same as steric namelist]
+	--> model_p : Physics (It is the p value of the variant, e.g. r1i2p3f4, then model_p is 3)
+	--> model_f : Focing (It is the f value of the variant, e.g. r1i2p3f4, then model_f is 4)
+	--> odm : mean residual (OBS-model) in the period 1970-2005 
+	--> grad : Residual trend in the period 1970-2005, calculated from linear regression
+	--> intercept : y-intercept of linear regression, also see grad
+	--> num_nan : Number of nan or missing values
+
+
+
+
+
+collective_stats.csv : Processed statistics from raw_stat.csv
+			Same model with the same p and f are grouped together
+			Models with num_nan > 0 are neglected
+	--> model : Model name [Same as steric namelist]
+	--> model_p : Physics (It is the p value of the variant, e.g. r1i2p3f4, then model_p is 3)
+        --> model_f : Focing (It is the f value of the variant, e.g. r1i2p3f4, then model_f is 4)
+	--> num_nan : Number of nan or missing values
+	--> odm : median of grouped odm in raw_stat.csv
+	--> grad : median of grouped grad in raw_stat.csv
+
+
+
+
+
+random_sample_stat_for_x-int.csv : Stores x-intercept of the least squares fit. To examine the internal variations of the fit
+	--> x-intercept_all_data : x-intercept of the least squares fit using all data
+	--> x-intercept_sample_median : median of x-intercept of the least squares fit using random samples (75% of the data is randomly chosen)
+	--> x-intercept_sample_lower_quart : Lower quartile of x-intercept of the least squares fit using random samples (75% of the data is randomly chosen)
+	--> x-intercept_sample_upper_quart : Upper quartile of x-intercept of the least squares fit using random samples (75% of the data is randomly chosen)
+
+
+
+plot_with_reg.jpeg : Mimic Slangen et al. 2016 (NCC) Figure S2 with CMIP6 steric data
+	--> Red dot : Different models (see collective_stats.csv)
+	--> Red dashed line : Least squares regression line
+	--> Blue lines : x-intercept_sample_median, x-intercept_sample_lower_quart, and x-intercept_sample_upper_quart
