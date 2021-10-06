@@ -22,7 +22,7 @@ import hadcrut5
 #import sgolay
 from tqdm import tqdm
 from scipy.signal import savgol_filter
-from settings import baseline_period, targetperiods
+from settings import baseline_period, targetperiods, datafolder
 
 
 
@@ -39,16 +39,16 @@ def extractRateVsT(
     if region:
         shortname = region
 
-    filename = f"../../data/processed_data/ExtractedFromTamsin/{shortname}_risk{risk_averse}.csv"
+    filename = f"{datafolder}/processed_data/ExtractedFromTamsin/{shortname}_risk{risk_averse}.csv"
 
     if loadifavailable & (len(glob.glob(filename))>0):
         output = pd.read_csv(filename)
         return output
 
     if risk_averse:
-        folder = "../../data/raw_data/Landice-Edwards21/proj_S11_RISK_TIMESERIES"
+        folder = f"{datafolder}/raw_data/Landice-Edwards21/proj_S11_RISK_TIMESERIES"
     else:
-        folder = "../../data/raw_data/Landice-Edwards21/proj_MAIN_TIMESERIES"
+        folder = f"{datafolder}/raw_data/Landice-Edwards21/proj_MAIN_TIMESERIES"
 
     files = glob.glob(folder + "/projections_*.csv")
 

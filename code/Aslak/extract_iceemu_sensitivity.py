@@ -17,10 +17,10 @@ import corner
 import hadcrut5
 import re
 import os
+from settings import datafolder
 
 
-
-tfolder = '../../data/processed_data/ExtractedFromTamsin/'
+tfolder = f'{datafolder}/processed_ExtractedFromTamsin/'
 ice = {'WAIS': None,
         'EAIS': None,
         'PEN': None,
@@ -78,7 +78,7 @@ for tfile in ice:
 
 
 
-fout = '../../data/processed_data/TSLS_estimates/tsls_ice_emulator.csv'
+fout = f'{datafolder}/processed_data/TSLS_estimates/tsls_ice_emulator.csv'
 output.to_csv(fout)
 
 

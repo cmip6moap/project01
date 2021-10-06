@@ -21,10 +21,11 @@ from tqdm import tqdm
 import corner
 import hadcrut5
 import re
+from settings import datafolder
 
 
 
-steric = pd.read_csv('../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv')
+steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv')
 steric['setup'] = steric.run.apply(lambda s: re.findall(r'r\d+i\d+(p\d+)',s)[0])
 steric = steric[steric.dSdt.notna()]
 steric = steric[steric.Tavg.notna()]
@@ -77,7 +78,7 @@ for name, group in groups:
 
 
 
-fout = '../../data/processed_data/TSLS_estimates/tsls_steric.csv'
+fout = f'{datafolder}/processed_data/TSLS_estimates/tsls_steric.csv'
 output.to_csv(fout)
 
 

@@ -14,7 +14,7 @@ import steric_tools
 import tas_tools
 import re
 
-from settings import targetperiods, baseline_period
+from settings import targetperiods, baseline_period, datafolder
 
 
 output = pd.DataFrame(
@@ -109,7 +109,7 @@ for scenario in scenarios:
             output.loc[output.shape[0]] = newrow
 
 
-fout = '../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv'
+fout = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv'
 output.to_csv(fout)
 
 

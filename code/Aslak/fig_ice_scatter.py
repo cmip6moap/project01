@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# load and plot Tavg-vs-dSdt calculated by IceComponents.py
+# load and plot Tavg-vs-dSdt calculated by extract_iceemu.py
 #
 # Aslak Grinsted 2021
 #
