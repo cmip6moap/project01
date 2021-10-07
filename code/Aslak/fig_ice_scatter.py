@@ -25,7 +25,7 @@ from misc_tools import confidence_ellipse
 tfolder = '../../data/processed_data/ExtractedFromTamsin/'
 components = ['WAIS', 'EAIS', 'PEN', 'Glaciers', 'GrIS']
 
-risk = True
+risk = False
 
 for component in components:
     fname = f'{tfolder}{component}_risk{risk}.csv'
@@ -34,6 +34,8 @@ for component in components:
         continue
 
     df = pd.read_csv(fname)
+
+    plt.figure(dpi=300)
 
     ice_source = df.iloc[0].ice_source
     region = df.iloc[0].region
@@ -45,7 +47,7 @@ for component in components:
         col = scenariocolors[scenario]
         plt.scatter(
             g.Tavg,
-            g.dSdt * 100,
+            g.dSdt * 1000,
             c='k',
             s=2,
             zorder=-1,
@@ -53,9 +55,9 @@ for component in components:
             alpha=0.4,
         )
         if groupix[-1]<2060:
-            confidence_ellipse(g.Tavg,g.dSdt*100,facecolor=col,alpha=.3, label=f'{scenario}')
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3, label=f'{scenario}')
         else:
-            confidence_ellipse(g.Tavg,g.dSdt*100,facecolor=col,alpha=.3)
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3)
     # ------------ PLOT comparison data --------------
     if region:
         sheet_name = region
@@ -74,16 +76,17 @@ for component in components:
             row["Rate"],
             xerr=Trow["sigmaT"],
             yerr=row["RateSigma"],
+            marker = '.', markersize=10,
             c="k",
         )
-        plt.text(Trow["Tanom"], row["Rate"] - row["RateSigma"], row["Name"])
+        plt.text(Trow["Tanom"], row["Rate"] + row["RateSigma"], f' {row["Name"]}',alpha=.6,rotation=90,horizontalalignment='center',verticalalignment='bottom',fontsize=8)
 
     if risk:
         plt.title(f'{sheet_name}  Risk averse')
     else:
         plt.title(f'{sheet_name}')
-    plt.xlabel("mean T")
-    plt.ylabel("dSdt (m/century)")
+    plt.xlabel("Temporal average of GMST (°C)")
+    plt.ylabel("$dS/dt$ (mm/yr)")
     plt.legend()
     plt.show()
 

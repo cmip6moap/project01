@@ -37,7 +37,8 @@ for sheet in sheets:
     sigmax = df['sigmaT'].values
     sigmay = df['RateSigma'].values/1000 #m/yr
 
-    Nmc = 10000
+    #note this assumes independent errors...
+    Nmc = 1000
     slopes = np.full((Nmc),np.nan)
     T0s = np.full((Nmc),np.nan)
     o_intercept = np.full((Nmc),np.nan)

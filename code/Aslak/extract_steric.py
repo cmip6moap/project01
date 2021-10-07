@@ -17,17 +17,7 @@ import re
 from settings import targetperiods, baseline_period, datafolder
 
 
-output = pd.DataFrame(
-    columns=[
-        "model",
-        "run",
-        "scenario",
-        "startyr",
-        "endyr",
-        "Tavg",
-        "dSdt",
-    ]
-)
+output = []
 
 scenarios = ['historical','SSP126', 'SSP245', 'SSP585']
 Tbaselines={}
@@ -93,9 +83,6 @@ for scenario in scenarios:
                 print(f'dSdt is NaN for {n.model} {n.run} {period[0]}-{period[-1]}')
                 continue
 
-
-
-
             newrow = {
                 "model": n.model,
                 "run": n.run,
@@ -106,8 +93,8 @@ for scenario in scenarios:
                 "dSdt": dSdt,
             }
 
-            output.loc[output.shape[0]] = newrow
-
+            output.append(newrow)
+output = pd.DataFrame(output)
 
 fout = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv'
 output.to_csv(fout)

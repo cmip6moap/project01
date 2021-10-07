@@ -33,19 +33,7 @@ steric = steric[steric.Tavg.notna()]
 steric_projections = steric[steric.scenario != 'historical']
 steric_historical = steric[steric.scenario == 'historical']
 
-output = pd.DataFrame(
-    columns=[
-        "model_key",
-        "startyr",
-        "endyr",
-        "Tmin",
-        "Tmax",
-        "Npts",
-        "TSLS",
-        "BalanceT",
-        "Intercept"
-    ]
-)
+output = []
 
 def group_id(row):
     if row.scenario == 'historical':
@@ -73,8 +61,9 @@ for name, group in groups:
         "BalanceT": -p[1]/p[0],
         "Intercept": p[1]
         }
-    output.loc[output.shape[0]] = newrow #EXTREMELY SLOW!
+    output.append(newrow)
 
+output = pd.DataFrame(output)
 
 
 

@@ -55,19 +55,7 @@ def extractRateVsT(
     # this gives the 2015 temperature relative to the baseline temp as defined in hadcrut5.
     T2015 = hadcrut5.getTstats(2010, 2019)["Tanom"]
 
-    output = pd.DataFrame(
-        columns=[
-            "ice_source",
-            "region",
-            "sample",
-            "scenario",
-            "riskaverse",
-            "startyr",
-            "endyr",
-            "Tavg",
-            "dSdt",
-        ]
-    )
+    output = []
     for file in tqdm(files):
         scenario = re.findall("_FAIR_([^\.]*)", file)[0]
 
@@ -114,12 +102,10 @@ def extractRateVsT(
                     "Tavg": Tavg,
                     "dSdt": dSdt,
                 }
-                output.loc[output.shape[0]] = newrow #EXTREMELY SLOW!
+                output.append(newrow)
 
-        # Q = Q.agg({'GSAT': 'mean', 'SLE': lambda x: (x.iloc[-5:].mean())*100/(2098-2015)}, as_index=False).reset_index()
-        # h=plt.scatter(Q.GSAT+T2015, Q.SLE/100, c=distinctcolors[fileix], s=2, alpha=.5)
-        # plt.scatter(Q.GSAT.median()+T2015, Q.SLE.median()/100, c=distinctcolors[fileix], s=50, zorder=10, edgecolors='k', label=scenario)
-        output.to_csv(filename)
+    output = pd.DataFrame(output)
+    output.to_csv(filename)
 
     return output
 

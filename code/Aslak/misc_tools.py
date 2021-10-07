@@ -64,3 +64,5 @@ def confidence_ellipse(x, y, n_std=1.0, ax=None, facecolor='none', **kwargs):
 
     ellipse.set_transform(transf + ax.transData)
     return ax.add_patch(ellipse)
+
+

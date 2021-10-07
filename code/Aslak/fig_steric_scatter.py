@@ -18,7 +18,7 @@ df = pd.read_csv('../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv')
 df = df.dropna() # there are some NaNs. Maybe due to incomplete temporal coverage?
 #TODO: look into why there are nans!
 
-
+plt.figure(dpi=300)
 G = df.groupby(["scenario", "startyr", "endyr"])
 for groupix, g in G:
     scenario = groupix[0]
@@ -26,7 +26,7 @@ for groupix, g in G:
 
     plt.scatter(
         g.Tavg,
-        g.dSdt * 100,
+        g.dSdt * 1000,
         c=col,
         s=4,
         zorder=-1,
@@ -38,9 +38,9 @@ for groupix, g in G:
         label = f'{groupix[1]}-{groupix[2]}'
 
     if groupix[1]<2040:
-        confidence_ellipse(g.Tavg,g.dSdt*100,facecolor=col,alpha=.3, label=label)
+        confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3, label=label)
     else:
-        confidence_ellipse(g.Tavg,g.dSdt*100,facecolor=col,alpha=.3)
+        confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3)
 # ------------ PLOT comparison data --------------
 
 sheet_name='Steric'
@@ -58,12 +58,12 @@ for ix, row in comparison_data.iterrows():
         yerr=row["RateSigma"],
         c="k",
     )
-    plt.text(Trow["Tanom"], row["Rate"] - row["RateSigma"], row["Name"])
+    plt.text(Trow["Tanom"], row["Rate"] + row["RateSigma"], f' {row["Name"]}',alpha=.6,rotation=90,horizontalalignment='center',verticalalignment='bottom',fontsize=8)
 
 plt.title(f'{sheet_name}')
-plt.xlabel("mean T")
-plt.ylabel("dSdt (m/century)")
-plt.legend()
+plt.xlabel("Temporal average of GMST (°C)")
+plt.ylabel("$dS/dt$ (mm/yr)")
+plt.legend(fontsize='small')
 plt.show()
 
 

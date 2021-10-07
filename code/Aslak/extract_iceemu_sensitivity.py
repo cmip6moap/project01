@@ -20,7 +20,7 @@ import os
 from settings import datafolder
 
 
-tfolder = f'{datafolder}/processed_ExtractedFromTamsin/'
+tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
 ice = {'WAIS': None,
         'EAIS': None,
         'PEN': None,
@@ -37,21 +37,7 @@ for tfile in ice:
 
 
 
-output = pd.DataFrame(
-    columns=[
-        "ice_component",
-        "model_key",
-        "startyr",
-        "endyr",
-        "Tmin",
-        "Tmax",
-        "Npts",
-        "TSLS",
-        "BalanceT",
-        "Intercept"
-    ]
-)
-
+output = []
 
 for tfile in ice:
     for key,group in ice[tfile].groupby(['sample','startyr','endyr']):
@@ -74,8 +60,9 @@ for tfile in ice:
             "BalanceT": -p[1]/p[0],
             "Intercept": p[1]
             }
-        output.loc[output.shape[0]] = newrow #EXTREMELY SLOW!
+        output.append(newrow)
 
+output = pd.DataFrame(output)
 
 
 fout = f'{datafolder}/processed_data/TSLS_estimates/tsls_ice_emulator.csv'
@@ -85,7 +72,7 @@ output.to_csv(fout)
 
 
 
-df=output[output.ice_component=='PEN']
+df=output[output.ice_component=='GrIS']
 for startyr, group in df.groupby('startyr'):
     bins = np.linspace(-0.005, 0.005, 50)
     #bins = np.linspace(-1, 1, 20)
