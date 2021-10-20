@@ -44,7 +44,7 @@ for sheet in sheets:
     o_intercept = np.full((Nmc),np.nan)
     for ii in range(Nmc):
         p = np.polyfit(x+np.random.randn(x.size)*sigmax,
-                       y+np.random.randn(y.size)*sigmay,1)#,w=1/sigmay)
+                       y+np.random.randn(y.size)*sigmay,1,w=1/sigmay)
         slopes[ii] = p[0]
         o_intercept[ii] = p[1]
         T0s[ii] = -p[1] / p[0]

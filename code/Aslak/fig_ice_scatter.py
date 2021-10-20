@@ -66,8 +66,7 @@ for component in components:
     print(sheet_name)
     comparison_data = pd.read_excel(
         "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
-        sheet_name=sheet_name,
-        skiprows=3,
+        sheet_name=sheet_name, comment='#'
     )
     for ix, row in comparison_data.iterrows():
         Trow = hadcrut5.getTstats(row["Period start"], row["Period end"])

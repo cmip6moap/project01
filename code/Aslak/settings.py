@@ -23,6 +23,8 @@ targetperiods = np.array([[1850,1900],[1900,1950],[1950,2000],[1992,2014],
                           [2016,2050],[2051,2100]])
 
 periodcolors = {"historical": distinctcolors[6],
+                "experts": distinctcolors[9],
+                "observations": '#888888',
                 "1850-2014": distinctcolors[6],
                 "1850-1900": distinctcolors[6],
                 "1900-1950": distinctcolors[6],
