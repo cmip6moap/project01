@@ -13,6 +13,7 @@ import pandas as pd
 import re
 import os.path
 import glob
+from settings import datafolder
 
 
 def parse_run(run):
@@ -46,7 +47,7 @@ def parse_run(run):
 #     return df
 
 def load_tas(model= 'ACCESS-CM2', scenario='historical', run='r1i1p1f1_gn', return_annual=True):
-    folder = f'../../data/raw_data/cmip6_tas_for_steric_analysis/{scenario}'
+    folder = f'{datafolder}/raw_data/cmip6_tas_for_steric_analysis/{scenario}'
     # r,i,p,f = parse_run(run)
     # r = r.zfill(2)
     #gm_tas_CMIP_historical_ACCESS-CM2_r1i1p1f1_gn.csv
