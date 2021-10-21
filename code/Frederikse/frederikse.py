@@ -47,5 +47,11 @@ for name,element in stats["global"].items():
 # Hope this helps!
 
 # Cheers,
+import matplotlib.pyplot as plt
 
 # Thomas
+s1 = stats["global"]["obs_steric"]["tseries"]
+s2 = stats["global"]["steric"]["tseries"]
+plt.plot(s1,label='obs_steric')
+plt.plot(s2,label='steric')
+plt.legend()
