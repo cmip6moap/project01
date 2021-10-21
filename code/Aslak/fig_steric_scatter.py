@@ -37,15 +37,15 @@ for groupix, g in G:
     if scenario == 'historical':
         label = f'{groupix[1]}-{groupix[2]}'
 
-    if groupix[1]<2040:
-        confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3, label=label)
+    if groupix[1] < 2040:
+        confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col, alpha=.3, label=label)
     else:
-        confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3)
+        confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col, alpha=.3)
 # ------------ PLOT comparison data --------------
 
 sheet_name='Steric'
 comparison_data = pd.read_excel(
-    "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
+    f"{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
     sheet_name=sheet_name, comment="#"
 )
 for ix, row in comparison_data.iterrows():
