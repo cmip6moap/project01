@@ -16,13 +16,13 @@ import corner
 import hadcrut5
 import re
 import os
-from settings import scenariocolors
+from settings import scenariocolors, datafolder
 from misc_tools import confidence_ellipse
 
 
 
 
-tfolder = '../../data/processed_data/ExtractedFromTamsin/'
+tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
 components = ['WAIS', 'EAIS', 'PEN', 'Glaciers', 'GrIS']
 
 risk = False
@@ -48,16 +48,16 @@ for component in components:
         plt.scatter(
             g.Tavg,
             g.dSdt * 1000,
-            c='k',
-            s=2,
+            c=col,
+            s=3,
             zorder=-1,
             edgecolors='none',
             alpha=0.4,
         )
         if groupix[-1]<2060:
-            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3, label=f'{scenario}')
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.2, label=f'{scenario}')
         else:
-            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.3)
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.2)
     # ------------ PLOT comparison data --------------
     if region:
         sheet_name = region

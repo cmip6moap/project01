@@ -28,7 +28,7 @@ for groupix, g in G:
         g.Tavg,
         g.dSdt * 1000,
         c=col,
-        s=4,
+        s=3,
         zorder=-1,
         edgecolors='none',
         alpha=0.4,
