@@ -31,7 +31,15 @@ stats = np.load('stats_basin_global.npy',allow_pickle=True).all()
 
 # The individual components are also there:
 
-stats["global"].keys()
+std290 = 3.2897
+
+for name,element in stats["global"].items():
+    for key,row in element.items():
+        if not (key.startswith('trend')):
+            continue
+        period = key.replace('trend_','').replace('_','\t')
+        sigma = (row[2]-row[1])/std290
+        print(f'{name}\t{period}\t{row[0]:.3f}\t{sigma:.3f}')
 # Out[18]: dict_keys(['obs', 'steric', 'grd_glac', 'grd_GrIS', 'grd_AIS', 'grd_tws', 'grd_total', 'grd_tws_natural', 'grd_tws_gwd', 'grd_tws_dam', 'grd_ice', 'altimetry', 'budget', 'diff', 'obs_steric'])
 
 # stats[“global”][“grd_glac”] is the glacier contribution, grd_GrIS = Greenland, “steric” (not obs_steric) is the steric component etc.
