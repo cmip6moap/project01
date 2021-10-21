@@ -28,4 +28,4 @@ settings_v2.py:
 
 extract_steric_v2.py
 
-	--> Baseline historical TAS will be calculated if steric timeseries (any scenario) exits
+	--> Baseline historical TAS will be calculated if steric timeseries (any scenario) exists
