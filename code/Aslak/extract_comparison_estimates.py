@@ -49,6 +49,8 @@ for sheet in sheets:
         o_intercept[ii] = p[1]
         T0s[ii] = -p[1] / p[0]
 
+    ptiles = np.percentile(slopes,[5,17,50,83,95])
+
     output.append({
             'component': sheet,
             'period start': df['Period start'].min(),
@@ -57,6 +59,11 @@ for sheet in sheets:
             'T0': np.mean(T0s),
             'Srate0': np.mean(o_intercept),
             'sigmaTSLS': np.std(slopes),
+            'TSLS_P5': ptiles[0],
+            'TSLS_P17': ptiles[1],
+            'TSLS_P50': ptiles[2],
+            'TSLS_P83': ptiles[3],
+            'TSLS_P95': ptiles[4],
             'sigmaT0': np.std(T0s),
             'sigmaSrate0': np.std(o_intercept),
         })

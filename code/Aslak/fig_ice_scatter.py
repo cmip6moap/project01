@@ -18,7 +18,7 @@ import re
 import os
 from settings import scenariocolors, datafolder
 from misc_tools import confidence_ellipse
-
+from plot_comparison_data import plot_comparison
 
 
 
@@ -64,22 +64,7 @@ for component in components:
     else:
         sheet_name = ice_source
     print(sheet_name)
-    comparison_data = pd.read_excel(
-        "../../data/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
-        sheet_name=sheet_name, comment='#'
-    )
-    for ix, row in comparison_data.iterrows():
-        Trow = hadcrut5.getTstats(row["Period start"], row["Period end"])
-        plt.errorbar(
-            Trow["Tanom"],
-            row["Rate"],
-            xerr=Trow["sigmaT"],
-            yerr=row["RateSigma"],
-            marker = '.', markersize=10,
-            c="k",
-        )
-        plt.text(Trow["Tanom"], row["Rate"] + row["RateSigma"], f' {row["Name"]}',alpha=.6,rotation=90,horizontalalignment='center',verticalalignment='bottom',fontsize=8)
-
+    plot_comparison(sheet_name)
     if risk:
         plt.title(f'{sheet_name}  Risk averse')
     else:

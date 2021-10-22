@@ -10,8 +10,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import hadcrut5
-from settings import scenariocolors
+from settings import scenariocolors, datafolder
 from misc_tools import confidence_ellipse
+from plot_comparison_data import plot_comparison
 
 
 df = pd.read_csv('../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv')
@@ -44,21 +45,7 @@ for groupix, g in G:
 # ------------ PLOT comparison data --------------
 
 sheet_name='Steric'
-comparison_data = pd.read_excel(
-    f"{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
-    sheet_name=sheet_name, comment="#"
-)
-for ix, row in comparison_data.iterrows():
-    Trow = hadcrut5.getTstats(row["Period start"], row["Period end"])
-    plt.errorbar(
-        Trow["Tanom"],
-        row["Rate"],
-        xerr=Trow["sigmaT"],
-        yerr=row["RateSigma"],
-        c="k",
-    )
-    plt.text(Trow["Tanom"], row["Rate"] + row["RateSigma"], f' {row["Name"]}',alpha=.6,rotation=90,horizontalalignment='center',verticalalignment='bottom',fontsize=8)
-
+plot_comparison(sheet_name)
 plt.title(f'{sheet_name}')
 plt.xlabel("Temporal average of GMST (°C)")
 plt.ylabel("$dS/dt$ (mm/yr)")
