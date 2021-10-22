@@ -56,6 +56,7 @@ for scenario in scenarios:
             Tbase = Tbaselines[base_key]
 
         for periodix in range(targetperiods.shape[0]):
+            #TODO:allow for some slack. e.g if run ends in 2099.
             period = targetperiods[periodix,:]
             if (period[0]<t[0]-1/12) | (period[-1]>t[-1]-1/12):
                 continue
