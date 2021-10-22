@@ -43,6 +43,7 @@ periodcolors = {"historical": distinctcolors[10],
 baseline_period = [1995,2014]
 
 
+eflag = 1
 
 
 

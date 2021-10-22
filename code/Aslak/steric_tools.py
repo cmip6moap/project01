@@ -3,10 +3,13 @@ This script has helper functions for reading the SSH files here:
     https://github.com/cmip6moap/project01/tree/main/data/raw_data/CMIP6%20steric%20SSH
 
 
-Based on rory binghams example code.
+Based on Rory Binghams example code.
 
 
 Modified by Aslak Grinsted 2021
+
+Modified by Kelvin Ng 2021 Oct
+
 """
 
 #
@@ -15,19 +18,17 @@ Modified by Aslak Grinsted 2021
 #
 #
 
-
-import csv
 import numpy as np
 import matplotlib.pyplot as plt
 import array
 import pandas as pd
-from scipy.ndimage import median_filter  # used for outlier removal
-
+#from scipy.ndimage import median_filter  # used for outlier removal
+from settings import datafolder
 
 
 def load_gm_steric(scenario = 'historical'):
 
-    folder = '../../data/raw_data/CMIP6 steric SSH'
+    folder = f'{datafolder}/raw_data/CMIP6 steric SSH'
     expr = scenario.lower()
     if expr == 'historical':
         mip = "CMIP"
@@ -64,22 +65,11 @@ def load_gm_steric(scenario = 'historical'):
     x = (np.arange(n_mnths) + .5)/12 + yr_strt
 
     #-----------------------
-    #modelnames = pd.read_csv(f'{folder}/cmip6_{mip}_{expr}_strh_gm_run_list.txt', sep = '\s+', names=['no','model','run'], index_col='no')
     modelnames = pd.read_csv(f'{folder}/cmip6_{mip}_{expr}_strh_zostoga_gm_list.txt', sep = '\s+', names=['no','model','run','val1','val2'], index_col='no')
 
     t = x
     steric = strh_gm
     steric[-1,-1] = np.nan
-
-    # #remove fishy first values:
-    # for no in range(steric.shape[0]):
-    #     ixfirst = np.argmax(~np.isnan(steric[no,:]))
-    #     if np.abs(steric[no,ixfirst]-steric[no,ixfirst+1])>0.1:
-    #         steric[no,ixfirst] = np.nan
-
-    # #remove sudden outliers:
-    # m = median_filter(steric,size=(5,1))
-    # steric = np.where(np.abs(steric-m)>1, m, steric)
 
     return (t, steric.T, modelnames)
 
