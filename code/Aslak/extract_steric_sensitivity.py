@@ -53,6 +53,7 @@ for name, group in groups:
     p = np.polyfit(group.Tavg.values,group.dSdt.values,1)
     newrow= {"model_key": name,
         "startyr": group.startyr.min(),
+        "physics": group.setup.iloc[0],
         "endyr": group.endyr.max(),
         "Tmin":group.Tavg.min(),
         "Tmax":group.Tavg.max(),

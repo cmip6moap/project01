@@ -22,8 +22,6 @@ comparisondata = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_o
 experts = pd.read_excel(f'{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx',sheet_name="Expert", comment="#")
 
 
-
-
 ptiles = [5,17,50,83,95] # percentiles of interest.
 
 components = ['Glaciers', 'GrIS', 'WAIS', 'EAIS', 'PEN', 'AIS', 'Land Ice', 'Steric', 'GMSL']
@@ -90,7 +88,7 @@ for component in components:
             #at this point subset is land_ice - now add steric
             for index, row in subset.iterrows():
                 s = steric[(steric.startyr == row.startyr) & (steric.endyr == row.endyr)]
-                s = s[s.model_key == np.random.choice(s.model_key.unique())]
+                #s = s[s.model_key == np.random.choice(s.model_key.unique())]
                 stericTSLS = s.TSLS.sample(1).values
                 subset.at[index,'TSLS'] = subset.at[index,'TSLS'] + stericTSLS
 
