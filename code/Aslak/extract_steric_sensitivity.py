@@ -21,12 +21,13 @@ from tqdm import tqdm
 import corner
 import hadcrut5
 import re
+from steric_tools import parse_run
 from settings import datafolder
 
 
 
 steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv')
-steric['setup'] = steric.run.apply(lambda s: re.findall(r'r\d+i\d+(p\d+)',s)[0])
+steric['setup'] = steric.run.apply(parse_run)
 steric = steric[steric.dSdt.notna()]
 steric = steric[steric.Tavg.notna()]
 
@@ -37,28 +38,28 @@ output = []
 
 def group_id(row):
     if row.scenario == 'historical':
-        return f'{row.model}:{row.setup}:historical'
+        return f"{row.model}:p{row.setup['p']}f{row.setup['f']}:historical"
     else:
-        return f'{row.model}:{row.setup}:{row.startyr}:{row.endyr}'
+        return f"{row.model}:p{row.setup['p']}:{row.startyr}:{row.endyr}"
 
 steric['group_id']=steric.apply(group_id,axis=1)
 
 groups = steric.groupby('group_id')
 for name, group in groups:
     N = group.Tavg.values.shape[0]
-    if N<2:
+    if N<3:
         continue
-    if (group.Tavg.max()-group.Tavg.min())<0.2:
-        continue
-    p = np.polyfit(group.Tavg.values,group.dSdt.values,1)
+    # if (group.Tavg.max()-group.Tavg.min())<0.2:
+    #     continue
+    p,covp = np.polyfit(group.Tavg.values,group.dSdt.values,1, cov=True)
     newrow= {"model_key": name,
         "startyr": group.startyr.min(),
-        "physics": group.setup.iloc[0],
         "endyr": group.endyr.max(),
         "Tmin":group.Tavg.min(),
         "Tmax":group.Tavg.max(),
         "Npts": N,
         "TSLS": p[0],
+        "sigmaTSLS": np.sqrt(covp[0,0]),
         "BalanceT": -p[1]/p[0],
         "Intercept": p[1]
         }
@@ -66,22 +67,26 @@ for name, group in groups:
 
 output = pd.DataFrame(output)
 
+#discard poorly constrained rows. sigmaTSLS
+output = output.loc[output.sigmaTSLS < 0.003]
 
 
 fout = f'{datafolder}/processed_data/TSLS_estimates/tsls_steric.csv'
 output.to_csv(fout)
 
 
+df = output[output['startyr']==2016]
+r = np.random.randn(len(df))
+plt.errorbar(df['Npts']+r*0.1, df['TSLS'], fmt='.', yerr=df['sigmaTSLS'], alpha=0.3)
 
 
-
-for startyr, group in output.groupby('startyr'):
-    bins = np.linspace(-0.005, 0.005, 20)
-    #bins = np.linspace(-1, 1, 20)
-    if group.shape[0]<2:
-        continue
-    plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
-plt.legend()
-plt.xlabel('TSLS (m/yr/K)')
-plt.title('Steric')
+# for startyr, group in output.groupby('startyr'):
+#     bins = np.linspace(-0.005, 0.005, 20)
+#     #bins = np.linspace(-1, 1, 20)
+#     if group.shape[0]<2:
+#         continue
+#     plt.hist(group.TSLS, bins, alpha=0.5, label=f'{group.startyr.min()}-{group.endyr.max()}')
+# plt.legend()
+# plt.xlabel('TSLS (m/yr/K)')
+# plt.title('Steric')
 

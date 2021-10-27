@@ -24,6 +24,21 @@ import array
 import pandas as pd
 #from scipy.ndimage import median_filter  # used for outlier removal
 from settings import datafolder
+import re
+
+def parse_run(run):
+    r = re.findall('r(\d+|ave)', run)
+    if r is None:
+        r = re.findall(r'_(\d+|ave)$', run)
+    if r:
+        r = r[0][0]
+    else:
+        r = 'ave'
+    i = re.findall(r'i(\d+)', run)[0][0]
+    p = re.findall(r'p(\d+)', run)[0][0]
+    f = re.findall(r'f(\d+)', run)[0][0]
+    return {'r': r, 'i': i, 'p': p, 'f': f}
+
 
 
 def load_gm_steric(scenario = 'historical'):

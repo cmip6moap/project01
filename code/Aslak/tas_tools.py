@@ -18,19 +18,6 @@ import os.path
 from settings import datafolder, eflag
 
 
-def parse_run(run):
-    r = re.findall('r(\d+|ave)', run)
-    if r is None:
-        r = re.findall(r'_(\d+|ave)$', run)
-    if r:
-        r = r[0][0]
-    else:
-        r = 'ave'
-    i = re.findall(r'i(\d+)', run)[0][0]
-    p = re.findall(r'p(\d+)', run)[0][0]
-    f = re.findall(r'f(\d+)', run)[0][0]
-    return r,i,p,f
-
 
 def load_tas(model= 'ACCESS-CM2', scenario='historical', run='r1i1p1f1_gn', return_annual=True):
     if scenario == 'historical':

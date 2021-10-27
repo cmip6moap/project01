@@ -39,9 +39,9 @@ for groupix, g in G:
         label = f'{groupix[1]}-{groupix[2]}'
 
     if groupix[1] < 2040:
-        confidence_ellipse(g.Tavg_ice, g.GMSL*1000, facecolor=col, alpha=.3, label=label)
+        confidence_ellipse(g.Tavg_ice, g.GMSL*1000, facecolor=col, label=label)
     else:
-        confidence_ellipse(g.Tavg_ice, g.GMSL*1000, facecolor=col, alpha=.3)
+        confidence_ellipse(g.Tavg_ice, g.GMSL*1000, facecolor=col)
 
 
 plot_comparison('GMSL')

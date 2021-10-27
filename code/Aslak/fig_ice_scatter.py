@@ -23,7 +23,7 @@ from plot_comparison_data import plot_comparison
 
 
 tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
-components = ['WAIS', 'EAIS', 'PEN', 'Glaciers', 'GrIS']
+components = ['GrIS','WAIS', 'EAIS', 'PEN', 'Glaciers']
 
 risk = False
 
@@ -55,9 +55,9 @@ for component in components:
             alpha=0.4,
         )
         if groupix[-1]<2060:
-            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.2, label=f'{scenario}')
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col, label=f'{scenario}')
         else:
-            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col,alpha=.2)
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col)
     # ------------ PLOT comparison data --------------
     if region:
         sheet_name = region
