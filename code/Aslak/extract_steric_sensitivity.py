@@ -75,10 +75,16 @@ fout = f'{datafolder}/processed_data/TSLS_estimates/tsls_steric.csv'
 output.to_csv(fout)
 
 
-df = output[output['startyr']==2016]
-r = np.random.randn(len(df))
-plt.errorbar(df['Npts']+r*0.1, df['TSLS'], fmt='.', yerr=df['sigmaTSLS'], alpha=0.3)
-
+df = output[output['startyr']==1850]
+#r = np.random.randn(len(df))
+#plt.errorbar(df['Npts']+r*0.1, df['TSLS'], fmt='.', yerr=df['sigmaTSLS'], alpha=0.3)
+plt.scatter(df['TSLS']*1000,df['Intercept']*1000,c=df['Npts'],marker='o',alpha=0.7)
+s = df[output.model_key.apply(lambda s: s.startswith('FGOALS-f3-L'))]
+plt.plot(s['TSLS']*1000,s['Intercept']*1000,'ro')
+plt.text(s['TSLS']*1000,s['Intercept']*1000,'FGOALS-f3-L',color='r')
+plt.xlabel('TSLS (mm/yr/K)')
+plt.ylabel('Intercept (mm/yr)')
+plt.title('1850-2014')
 
 # for startyr, group in output.groupby('startyr'):
 #     bins = np.linspace(-0.005, 0.005, 20)
