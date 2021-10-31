@@ -34,6 +34,7 @@ for component in components:
         continue
 
     df = pd.read_csv(fname)
+    df = df.loc[df.scenario != 'SSPNDC']
 
     plt.figure(dpi=300)
 
