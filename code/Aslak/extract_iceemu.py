@@ -90,7 +90,9 @@ def extractRateVsT(
                     #skip historical periods not in dataset.
                     continue
                 dSdt = (SLE[ix[-1]] - SLE[ix[0]]) / (period[-1] - period[0])
+
                 Tavg = np.mean(T[ix[0] : ix[-1] + 1])
+                dTdt = np.polyfit(t[ix[0] : ix[-1] + 1],T[ix[0] : ix[-1] + 1],1)[0]
                 newrow = {
                     "ice_source": ice_source,
                     "region": region,
@@ -99,6 +101,7 @@ def extractRateVsT(
                     "risk_averse": risk_averse,
                     "startyr": period[0],
                     "endyr": period[-1],
+                    "dTdt": dTdt,
                     "Tavg": Tavg,
                     "dSdt": dSdt,
                 }
