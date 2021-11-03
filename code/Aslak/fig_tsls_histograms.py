@@ -6,12 +6,10 @@ Created on Fri Oct  1 14:47:14 2021
 """
 
 from settings import datafolder, periodcolors
-import glob
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.stats import norm
-
+import matplotlib.patheffects as PathEffects
 
 
 iceemu = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_ice_emulator.csv')
@@ -51,14 +49,15 @@ def myboxplot(y, ptilerng, color, rightlabel='', centertext = False):
              ybox, color = color,clip_on = False)
     plt.plot(ptilerng[2]+np.zeros(2),ybox[1:3],'k',alpha=0.3,clip_on = False)
     if centertext:
-        plt.text(np.nanmean(ptilerng),y,f' {rightlabel}',
+        txt = plt.text(np.nanmean(ptilerng),y,f' {rightlabel}',
              fontsize='x-small',alpha = 0.7,
              horizontalalignment = 'center',
              verticalalignment='center',clip_on = False)
     else:
         #return
-        plt.text(np.nanmax(ptilerng),y,f' {rightlabel}',
+        txt = plt.text(np.nanmax(ptilerng),y,f' {rightlabel}',
              fontsize='xx-small',alpha = 0.3,verticalalignment='center',clip_on = False)
+    txt.set_path_effects([PathEffects.withStroke(linewidth=2, alpha=0.3, foreground='w')])
 
 
 fig1 = plt.figure(figsize = [4,6], facecolor='white', dpi=300)
