@@ -29,8 +29,8 @@ tol_rainbow_discrete22 = ['#6F4C9B', '#6059A9', '#5568B8', '#4E79C5', '#4D8AC6',
 AR6_scenarios_colors = ['#B3AA96',"000000","#00a9cf","#003466","#f69320","#df0000","#980002"] #with 2 colors pre-pended
 
 #select two colormaps... for scatter plots and TSLS
-sequential_colormap = tol_rainbow_discrete22[0::3]
-#sequential_colormap = AR6_scenarios_colors
+#sequential_colormap = tol_rainbow_discrete22[0::3]
+sequential_colormap = AR6_scenarios_colors
 categorical_colormap = tol_bright
 
 
