@@ -53,12 +53,12 @@ for component in components:
             s=3,
             zorder=-1,
             edgecolors='none',
-            alpha=0.4,
+            alpha=0.2,
         )
         if groupix[-1]<2060:
             confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col, label=f'{scenario}')
         else:
-            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col)
+            confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col, linestyle = '--')
     # ------------ PLOT comparison data --------------
     if region:
         sheet_name = region

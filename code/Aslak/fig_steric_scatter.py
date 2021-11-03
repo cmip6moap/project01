@@ -32,7 +32,7 @@ for groupix, g in G:
         s=3,
         zorder=-1,
         edgecolors='none',
-        alpha=0.4,
+        alpha=0.2,
     )
     label = f'{scenario}'
     if scenario == 'historical':
@@ -41,7 +41,7 @@ for groupix, g in G:
     if groupix[1] < 2040:
         confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col, label=label)
     else:
-        confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col)
+        confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col, linestyle='--')
 # ------------ PLOT comparison data --------------
 
 sheet_name='Steric'
