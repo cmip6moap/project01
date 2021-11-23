@@ -27,6 +27,8 @@ from settings import datafolder
 import re
 
 def parse_run(run):
+    if isinstance(run, pd.Series):
+        return pd.DataFrame.from_records(run.map(parse_run))
     r = re.findall('(\w)([0-9]+)', run)
     return {e[0]: e[1] for e in r}
 
@@ -77,12 +79,25 @@ def load_gm_steric(scenario = 'historical'):
     steric = strh_gm
     steric[-1,-1] = np.nan
 
+#    if scenario=='ssp126':
+#        ix = np.where(modelnames.model == 'IPSL-CM5A2-INCA')[0]
+#        steric[:,ix] = np.nan
+
+
+
     return (t, steric.T, modelnames)
+
 
 
 
 if __name__ == "__main__":
     # this is some test code:
-    t,z,names = load_gm_steric('historical')
+    t,Z,names = load_gm_steric('ssp126')
     import matplotlib.pyplot as plt
-    plt.plot(t,z)
+    #plt.plot(t,Z)
+    for col in range(47,52):
+        z = Z[:,col]
+        n = names.loc[col+1]
+        print(str(col),n.model,n.run,n.val1,n.val2)
+        plt.plot(t,z,label=f'col{col}: {n.model}')
+    plt.legend()
