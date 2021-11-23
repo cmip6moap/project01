@@ -75,6 +75,11 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
                (steric.scenario == scenario)]
 
 
+    # select a random model based on a probability.
+    # The probability of selecting a steric model run depends on
+    #  - the number of times that particular model has been run
+    #  - a similar TAS response. (here we use a normal distribution)
+
     dT = S.Tavg-irow.Tavg.iloc[0]
 
     p = norm.pdf(dT.values,0,0.2) / S.counts.values
@@ -84,6 +89,9 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
     s = S.iloc[ix]
     dT = dT.iloc[ix]
 
+
+    #The selected model does not have an exact temperature match to the emulator.
+    # - so we use the estimated TSLS to adjust for the mismatch in temperature.
     no_scen_key = re.sub(':[^:]+$','',s.model_key)
     tsls = tsls_steric.TSLS[tsls_steric.model_key==no_scen_key ]
     if len(tsls)>0:
