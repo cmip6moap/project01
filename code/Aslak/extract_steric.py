@@ -28,9 +28,9 @@ for scenario in scenarios:
 
     for col in range(Z.shape[1]):
         z = Z[:,col]
-        n = names.loc[col+1]
+        n = names.iloc[col]
 
-## SKIP if steric timeseries is full of NaN
+    ## SKIP if steric timeseries is full of NaN
         if np.isnan(z).all():
             if eflag == 1:
                 print(f'ALL NaNs? {n.model} {n.run}')
