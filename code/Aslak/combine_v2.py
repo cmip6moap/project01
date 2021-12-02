@@ -86,10 +86,11 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
     dT = S.Tavg-irow.Tavg.iloc[0]
 
     p = norm.pdf(dT.values,0,0.2) / S.counts.values
+    steric.loc[Six,'probability_weight'] = S.probability_weight + p
+
     p = np.cumsum(p)/np.sum(p)
     ix = np.flatnonzero(p>=np.random.rand())[0]
 
-    steric.loc[Six,'probability_weight'] = p
 
     s = S.iloc[ix]
     dT = dT.iloc[ix]
@@ -140,6 +141,8 @@ output.to_csv(fname)
 #There are no probability_weight for historical runs.
 #Fetch weights from corresponding projection runs.
 for index, row in steric.iterrows():
+    if row.probability_weight>0:
+        continue
     similar = steric[(row.model == steric.model) &
                      (row.p == steric.p) &
                      (row.r == steric.r) &
