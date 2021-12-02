@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 import matplotlib.transforms as transforms
 
-def confidence_ellipse(x, y, n_std=1.0, ax=None, facecolor='none', **kwargs):
+def confidence_ellipse(x, y, n_std=1.0, weights=None, ax=None, facecolor='none', **kwargs):
     """
     Create a plot of the covariance confidence ellipse of *x* and *y*.
 
@@ -37,8 +37,16 @@ def confidence_ellipse(x, y, n_std=1.0, ax=None, facecolor='none', **kwargs):
     if not ax:
         ax = plt.gca()
 
+    if weights:
+        cov = np.cov(x, y, aweights = weights)
+        sumw = np.sum(weights)
+        mean_x = np.sum(x*weights)/sumw
+        mean_y = np.sum(y*weights)/sumw
+    else:
+        cov = np.cov(x, y)
+        mean_x = np.mean(x)
+        mean_y = np.mean(y)
 
-    cov = np.cov(x, y)
     pearson = cov[0, 1]/np.sqrt(cov[0, 0] * cov[1, 1])
     # Using a special case to obtain the eigenvalues of this
     # two-dimensionl dataset.
@@ -51,11 +59,9 @@ def confidence_ellipse(x, y, n_std=1.0, ax=None, facecolor='none', **kwargs):
     # the squareroot of the variance and multiplying
     # with the given number of standard deviations.
     scale_x = np.sqrt(cov[0, 0]) * n_std
-    mean_x = np.mean(x)
 
     # calculating the stdandard deviation of y ...
     scale_y = np.sqrt(cov[1, 1]) * n_std
-    mean_y = np.mean(y)
 
     transf = transforms.Affine2D() \
         .rotate_deg(45) \
