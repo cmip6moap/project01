@@ -15,9 +15,18 @@ from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
 
 
-df = pd.read_csv('../../data/processed_data/ExtractedFromSSH/StericTvsRate.csv')
+
+#fname = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv'
+fname = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_with_weights.csv'
+df = pd.read_csv(fname, index_col=0)
+
+
 df = df.dropna() # there are some NaNs. Maybe due to incomplete temporal coverage?
 #TODO: look into why there are nans!
+
+
+
+
 
 plt.figure(dpi=300)
 G = df.groupby(["scenario", "startyr", "endyr"])
@@ -39,9 +48,9 @@ for groupix, g in G:
         label = f'{groupix[1]}-{groupix[2]}'
 
     if groupix[1] < 2040:
-        confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col, label=label)
+        confidence_ellipse(g.Tavg, g.dSdt*1000, weights = g.probability_weight, facecolor=col, label=label)
     else:
-        confidence_ellipse(g.Tavg, g.dSdt*1000, facecolor=col, linestyle='--')
+        confidence_ellipse(g.Tavg, g.dSdt*1000, weights = g.probability_weight, facecolor=col, linestyle='--')
 # ------------ PLOT comparison data --------------
 
 sheet_name='Steric'

@@ -27,9 +27,10 @@ random.seed(1337)
 
 #FIRST COMBINE THE dSdt vs T data.
 
-steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv')
+steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv', index_col=0)
 steric = steric.join(parse_run(steric.run))
 steric['model_key'] = steric.model + ':p' + steric['i'] + ':' + steric.startyr.astype(str) + ':' + steric.endyr.astype(str) + ':' + steric.scenario
+steric['probability_weight'] = 0.0
 
 #Add a column with how many times each model_key appears in the dataset
 counts = steric.pivot_table(index=['model_key'], aggfunc='size')
@@ -72,10 +73,10 @@ output = []
 grouped_ice = ice.groupby(by=['sample','scenario','startyr','endyr'])
 for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
 
-    S = steric[(steric.startyr == startyr) &
+    Six = steric.index[(steric.startyr == startyr) &
                (steric.endyr == endyr) &
                (steric.scenario == scenario)]
-
+    S = steric.loc[Six]
 
     # select a random model based on a probability.
     # The probability of selecting a steric model run depends on
@@ -87,6 +88,8 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
     p = norm.pdf(dT.values,0,0.2) / S.counts.values
     p = np.cumsum(p)/np.sum(p)
     ix = np.flatnonzero(p>=np.random.rand())[0]
+
+    steric.loc[Six,'probability_weight'] = p
 
     s = S.iloc[ix]
     dT = dT.iloc[ix]
@@ -132,5 +135,21 @@ fname = f'{datafolder}/processed_Data/combined/combined_dSdt_T.csv'
 
 output.to_csv(fname)
 
+
+#
+#There are no probability_weight for historical runs.
+#Fetch weights from corresponding projection runs.
+for index, row in steric.iterrows():
+    similar = steric[(row.model == steric.model) &
+                     (row.p == steric.p) &
+                     (row.r == steric.r) &
+                     (steric.endyr>2060) &
+                     (steric.scenario == 'SSP585')]
+    if len(similar)>0:
+        steric.loc[index,'probability_weight'] = similar.probability_weight.sum()
+
+
+
+steric.to_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_with_weights.csv')
 
 import fig_gmsl_scatter

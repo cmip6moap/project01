@@ -37,15 +37,15 @@ def confidence_ellipse(x, y, n_std=1.0, weights=None, ax=None, facecolor='none',
     if not ax:
         ax = plt.gca()
 
-    if weights:
+    if weights is None:
+        cov = np.cov(x, y)
+        mean_x = np.mean(x)
+        mean_y = np.mean(y)
+    else:
         cov = np.cov(x, y, aweights = weights)
         sumw = np.sum(weights)
         mean_x = np.sum(x*weights)/sumw
         mean_y = np.sum(y*weights)/sumw
-    else:
-        cov = np.cov(x, y)
-        mean_x = np.mean(x)
-        mean_y = np.mean(y)
 
     pearson = cov[0, 1]/np.sqrt(cov[0, 0] * cov[1, 1])
     # Using a special case to obtain the eigenvalues of this
