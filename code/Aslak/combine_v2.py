@@ -151,6 +151,7 @@ for index, row in steric.iterrows():
     if len(similar)>0:
         steric.loc[index,'probability_weight'] = similar.probability_weight.sum()
 
+#the above method will give zero weight to model-runs that have not been run for ssp585.
 
 
 steric.to_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_with_weights.csv')
