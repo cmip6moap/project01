@@ -20,9 +20,10 @@ from steric_tools import parse_run
 # This file combines ice with steric.
 #
 # 1) Combine the dSdt and T estimates from all contributors
-# 2) Combine the TSLS estimates of all contributors
+# 2) Combine the TSLS estimates of all contributors (NOT DONE YET)
 
-
+import random
+random.seed(1337)
 
 #FIRST COMBINE THE dSdt vs T data.
 
@@ -30,6 +31,7 @@ steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRat
 steric = steric.join(parse_run(steric.run))
 steric['model_key'] = steric.model + ':p' + steric['i'] + ':' + steric.startyr.astype(str) + ':' + steric.endyr.astype(str) + ':' + steric.scenario
 
+#Add a column with how many times each model_key appears in the dataset
 counts = steric.pivot_table(index=['model_key'], aggfunc='size')
 counts = pd.DataFrame(counts) # Convert Series to DataFrame
 counts.index.name = 'model_key'
