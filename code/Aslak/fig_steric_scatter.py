@@ -17,7 +17,8 @@ from plot_comparison_data import plot_comparison
 
 
 #fname = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv'
-fname = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_with_weights.csv'
+# fname = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_with_weights.csv'
+fname = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_avg_with_weights.csv'
 df = pd.read_csv(fname, index_col=0)
 
 
@@ -38,10 +39,10 @@ for groupix, g in G:
         g.Tavg,
         g.dSdt * 1000,
         c=col,
-        s=3,
+        s=5,
         zorder=-1,
         edgecolors='none',
-        alpha=0.2,
+        alpha=0.4,
     )
     label = f'{scenario}'
     if scenario == 'historical':

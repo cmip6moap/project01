@@ -16,6 +16,9 @@ import hadcrut5
 import steric_tools
 import tas_tools
 import re
+from tqdm import tqdm
+from steric_tools import parse_run
+
 
 from settings import targetperiods, baseline_period, datafolder, eflag
 
@@ -116,6 +119,20 @@ for scenario in scenarios:
             output.append(newrow)
 output = pd.DataFrame(output)
 
-fout = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv'
+fout = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_individualruns.csv'
 output.to_csv(fout)
+
+
+#save another version where models have been averaged.
+steric = output
+steric = steric.join(parse_run(steric.run))
+steric = steric.groupby(by=['model','p','scenario','startyr','endyr']).agg('mean').reset_index()
+
+fout = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_averaged.csv'
+steric.to_csv(fout)
+
+
+
+
+
 

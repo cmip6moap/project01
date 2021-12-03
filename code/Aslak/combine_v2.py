@@ -14,7 +14,9 @@ import re
 import os
 from scipy.stats import norm
 from settings import datafolder
+from tqdm import tqdm
 from steric_tools import parse_run
+
 
 
 # This file combines ice with steric.
@@ -22,24 +24,34 @@ from steric_tools import parse_run
 # 1) Combine the dSdt and T estimates from all contributors
 # 2) Combine the TSLS estimates of all contributors (NOT DONE YET)
 
-import random
-random.seed(1337)
+np.random.seed(1337)
 
 #FIRST COMBINE THE dSdt vs T data.
 
-steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv', index_col=0)
-steric = steric.join(parse_run(steric.run))
-steric['model_key'] = steric.model + ':p' + steric['i'] + ':' + steric.startyr.astype(str) + ':' + steric.endyr.astype(str) + ':' + steric.scenario
+steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_averaged.csv', index_col=0)
+steric['model_key'] = steric.model + ':p' + steric['p'].astype(str) + ':' + steric.startyr.astype(str) + ':' + steric.endyr.astype(str) + ':' + steric.scenario
 steric['probability_weight'] = 0.0
 
-#Add a column with how many times each model_key appears in the dataset
-counts = steric.pivot_table(index=['model_key'], aggfunc='size')
-counts = pd.DataFrame(counts) # Convert Series to DataFrame
-counts.index.name = 'model_key'
-counts.reset_index(inplace=True) # Change row names to be a column
-counts.columns = ['model_key', 'counts']
-steric = steric.merge(counts) # Merge dataframes on common column
 #---------------------------------
+
+# steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv', index_col=0)
+# steric = steric.join(parse_run(steric.run))
+# steric['model_key'] = steric.model + ':p' + steric['p'] + ':' + steric.startyr.astype(str) + ':' + steric.endyr.astype(str) + ':' + steric.scenario
+
+# mymean = lambda x: x.mean() if x.dtype == np.float64 else x.iloc[0]
+# steric = steric.groupby(by=['model_key']).agg(mymean).reset_index()
+
+# steric['probability_weight'] = 0.0
+
+# #Add a column with how many times each model_key appears in the dataset
+# counts = steric.pivot_table(index=['model_key'], aggfunc='size')
+# counts = pd.DataFrame(counts) # Convert Series to DataFrame
+# counts.index.name = 'model_key'
+# counts.reset_index(inplace=True) # Change row names to be a column
+# counts.columns = ['model_key', 'counts']
+# steric = steric.merge(counts) # Merge dataframes on common column
+
+
 
 tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
 ice = {'WAIS': None,
@@ -80,12 +92,11 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
 
     # select a random model based on a probability.
     # The probability of selecting a steric model run depends on
-    #  - the number of times that particular model has been run
     #  - a similar TAS response. (here we use a normal distribution)
 
     dT = S.Tavg-irow.Tavg.iloc[0]
 
-    p = norm.pdf(dT.values,0,0.2) / S.counts.values
+    p = norm.pdf(dT.values,0,0.2)
     steric.loc[Six,'probability_weight'] = S.probability_weight + p
 
     p = np.cumsum(p)/np.sum(p)
@@ -115,7 +126,8 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
         "endyr": endyr,
         "Tavg": s.Tavg, #----------
         "Tavg_ice": f.Tavg,
-        "run": s.run,
+        "p": s.p,
+        #"run": s.run,
         "ice_sample": sample,
         "risk_averse": risk,
         "Steric": s.dSdt + dT*tsls,
@@ -145,7 +157,7 @@ for index, row in steric.iterrows():
         continue
     similar = steric[(row.model == steric.model) &
                      (row.p == steric.p) &
-                     (row.r == steric.r) &
+                     #(row.r == steric.r) &
                      (steric.endyr>2060) &
                      (steric.scenario == 'SSP585')]
     if len(similar)>0:
@@ -154,6 +166,6 @@ for index, row in steric.iterrows():
 #the above method will give zero weight to model-runs that have not been run for ssp585.
 
 
-steric.to_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_with_weights.csv')
+steric.to_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_avg_with_weights.csv')
 
 import fig_gmsl_scatter

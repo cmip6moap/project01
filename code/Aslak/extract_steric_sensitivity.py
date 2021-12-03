@@ -26,7 +26,7 @@ from settings import datafolder
 
 
 
-steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate.csv')
+steric = pd.read_csv(f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_individualruns.csv')
 steric['setup'] = steric.run.apply(parse_run)
 steric = steric[steric.dSdt.notna()]
 steric = steric[steric.Tavg.notna()]
