@@ -20,6 +20,8 @@ comparisondata = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_o
 experts = pd.read_excel(f'{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx',sheet_name="Expert", comment="#")
 
 
+#also save every plotted range as table ... todo
+output=[]
 
 
 ptiles = [5,17,50,83,95] # percentiles of interest.
@@ -27,8 +29,26 @@ ptiles = [5,17,50,83,95] # percentiles of interest.
 components = ['Glaciers', 'GrIS', 'WAIS', 'EAIS', 'PEN', 'AIS', 'Land Ice', 'Steric', 'GMSL']
 
 
-def myboxplot(y, ptilerng, color, rightlabel='', centertext = False):
+def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False):
     mx = plt.xlim()[1]
+    if name in periodcolors:
+        color = periodcolors[name]
+    elif rightlabel in periodcolors:
+        color = periodcolors[rightlabel]
+    else:
+        color = name
+    newrow = {
+            "component": component,
+            "label": name,
+            "period": rightlabel,
+            "p5": ptilerng[0],
+            "p17": ptilerng[1],
+            "p50": ptilerng[2],
+            "p83": ptilerng[3],
+            "p95": ptilerng[4],
+    }
+
+
     if ptilerng[-1] > mx:
         plt.plot([ptilerng[0],ptilerng[3]],[y,y],color = color,linewidth=2,clip_on = False,alpha=0.4)
         plt.arrow(ptilerng[3],y,mx-ptilerng[3],0,
@@ -50,7 +70,7 @@ def myboxplot(y, ptilerng, color, rightlabel='', centertext = False):
     plt.fill([ptilerng[1],ptilerng[3],ptilerng[3],ptilerng[1]],
              ybox, color = color,clip_on = False)
     plt.plot(ptilerng[2]+np.zeros(2),ybox[1:3],'k',alpha=0.3,clip_on = False)
-    if centertext:
+    if islabel: #centertext
         txt = plt.text(np.nanmean(ptilerng),y,f' {rightlabel}',
              fontsize='x-small',alpha = 0.7,
              horizontalalignment = 'center',
@@ -59,6 +79,8 @@ def myboxplot(y, ptilerng, color, rightlabel='', centertext = False):
         #return
         txt = plt.text(np.nanmax(ptilerng),y,f' {rightlabel}',
              fontsize='xx-small',alpha = 0.3,verticalalignment='center',clip_on = False)
+        output.append(newrow)
+
     txt.set_path_effects([PathEffects.withStroke(linewidth=2, alpha=0.3, foreground='w')])
 
 
@@ -94,36 +116,35 @@ for component in components:
                 subset.at[index,'TSLS'] = subset.at[index,'TSLS'] + stericTSLS
 
 
-
+    #MODELS
     for startyr, group in subset.groupby('startyr'):
         if group.shape[0]<2:
             continue
         ps = np.percentile(group.TSLS*1000,ptiles)
         lbl = f'{group.startyr.iloc[0]}-{group.endyr.iloc[0]}'
-        col = periodcolors[lbl]
-
-        myboxplot(yrow,ps,color=col,rightlabel=lbl)
+        myboxplot(yrow,ps,name='models',component=component,rightlabel=lbl)
         yend = yrow
         yrow = yrow + 1
 
 
-
+    #OBS
     if component in comparisondata.index:
         subset_obs = comparisondata.loc[component]
         mu = subset_obs.TSLS*1000
         sigma = subset_obs.sigmaTSLS*1000
         ps= [subset_obs.TSLS_P5, subset_obs.TSLS_P17, subset_obs.TSLS_P50, subset_obs.TSLS_P83, subset_obs.TSLS_P95]
         lbl = f"{subset_obs['period start']:.0f}-{subset_obs['period end']:.0f}"
-        myboxplot(yrow,np.array(ps)*1000,periodcolors['observations'],lbl)
+        myboxplot(yrow,np.array(ps)*1000,'observations',component,lbl)
         yend = yrow
         yrow = yrow + 1
 
+    #experts
     ex = experts.loc[experts.Component == component]
     if len(ex)==2:
         dT = np.diff(ex['avgT during 21stC'].values,axis=0)[0]
         Sdot = ex[['SLR 5', 'SLR 17', 'SLR 50', 'SLR 83', 'SLR 95']]*10
         dSdot_dT = np.diff(Sdot.values,axis=0)[0]/dT
-        myboxplot(yrow,dSdot_dT,periodcolors['experts'],'2000-2100')
+        myboxplot(yrow,dSdot_dT,'experts',component,'2000-2100')
         yend = yrow
         yrow = yrow + 1
 
@@ -137,16 +158,19 @@ for component in components:
 
 
 rng =[np.nan,6.1,np.nan,9,np.nan]
-myboxplot(1.5,rng, periodcolors['1850-2014'], 'models historical', centertext=True)
-myboxplot(2.5,rng, periodcolors['2016-2050'], 'models early $21^{st}$C', centertext=True)
-myboxplot(3.5,rng, periodcolors['2051-2100'], 'models late $21^{st}$C', centertext=True)
-myboxplot(4.5,rng, periodcolors['observations'], 'observations', centertext=True)
-myboxplot(5.5,rng, periodcolors['experts'], 'experts $21^{st}$C', centertext=True)
+myboxplot(1.5,rng, '1850-2014', rightlabel='models historical', islabel=True)
+myboxplot(2.5,rng, '2016-2050', rightlabel='models early $21^{st}$C', islabel=True)
+myboxplot(3.5,rng, '2051-2100', rightlabel='models late $21^{st}$C', islabel=True)
+myboxplot(4.5,rng, 'observations', rightlabel='observations', islabel=True)
+myboxplot(5.5,rng, 'experts', rightlabel='experts $21^{st}$C', islabel=True)
 
 
 plt.grid(axis='x',linewidth=0.5,color='#EEEEEE')
 plt.xlabel('TSLS (mm/yr/K)')
 plt.show()
 
+df = pd.DataFrame(output)
 
+
+df.to_csv(f'{datafolder}/processed_data/TSLS_estimates/final_tsls_ranges.csv',index=False)
 #
