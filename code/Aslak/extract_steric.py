@@ -126,7 +126,9 @@ output.to_csv(fout)
 #save another version where models have been averaged.
 steric = output
 steric = steric.join(parse_run(steric.run))
-steric = steric.groupby(by=['model','p','scenario','startyr','endyr']).agg('mean').reset_index()
+g = steric.groupby(by=['model','p','scenario','startyr','endyr'])
+steric = g.agg('mean').reset_index()
+
 
 fout = f'{datafolder}/processed_data/ExtractedFromSSH/StericTvsRate_averaged.csv'
 steric.to_csv(fout)
