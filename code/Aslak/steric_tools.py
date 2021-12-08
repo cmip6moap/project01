@@ -98,7 +98,8 @@ def load_gm_steric(scenario = 'historical', apply_drift_correction=False):
 @lru_cache(maxsize=None)
 def calc_drift():
     t,Z,names = load_gm_steric('historical', apply_drift_correction=False)
-    ix = np.flatnonzero((t>=1958) & (t<2015)) #table 1 https://journals.ametsoc.org/view/journals/clim/31/3/jcli-d-17-0502.1.xml
+    ix = np.flatnonzero((t>=1958) & (t<2015))
+    #table 1 https://journals.ametsoc.org/view/journals/clim/31/3/jcli-d-17-0502.1.xml
     drift = np.zeros(Z.shape[1]) + np.nan
     for col in range(len(drift)):
         if np.any(np.isnan(Z[ix,col])):
