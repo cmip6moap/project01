@@ -26,8 +26,7 @@ n_runs = n_vals // n_mnths
 print(n_runs)
 
 tmp = array.array("f") 
-tmp.fromfile(fid, b//4+1)
-tmp = tmp[1:]
+tmp.fromfile(fid, b//4)
 tmp = np.asarray(tmp)
 strh_gm = np.reshape(tmp, (n_runs, n_mnths), 'F')
 strh_gm[strh_gm<-1.7e7] = "NaN"
