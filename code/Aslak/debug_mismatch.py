@@ -38,4 +38,11 @@ ssp585 = load_trend('ssp585')
 
 m = pd.concat([hist, ssp126, ssp245, ssp585], axis=1)
 
-m.to_excel(f'{datafolder}/processed_data/debug_mismatch.xls')
+# m.to_excel(f'{datafolder}/processed_data/debug_mismatch.xls')
+
+
+plt.scatter(m.ssp126_trend,m.ssp245_trend,c=m.ssp126_rowindex)
+plt.xlabel('ssp126 trend')
+plt.ylabel('ssp245 trend')
+cbar = plt.colorbar()
+cbar.ax.set_ylabel('ssp126 row index', rotation=270)

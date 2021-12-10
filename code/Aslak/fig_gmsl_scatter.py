@@ -59,10 +59,12 @@ if True:
         dSdt = (s[2100]-s[2050])/50
         t = tas[(tas.Year>=2050) & (tas.Year<=2100)].mean() - tasbase
         plt.plot(t['Mean'],dSdt*1000,'bo')
-        dSdt = (s[2050]-s[2020])/30
-        t = tas[(tas.Year>=2020) & (tas.Year<=2050)].mean() - tasbase
-        plt.plot(t['Mean'],dSdt*1000,'mo')
-
+        # dSdt = (s[2050]-s[2020])/30
+        # t = tas[(tas.Year>=2020) & (tas.Year<=2050)].mean() - tasbase
+        # plt.plot(t['Mean'],dSdt*1000,'mo')
+        # dSdt = (s[2100]-s[2020])/70
+        # t = tas[(tas.Year>=2020) & (tas.Year<=2100)].mean() - tasbase
+        # plt.plot(t['Mean'],dSdt*1000,'ro')
 
 plot_comparison('GMSL')
 
