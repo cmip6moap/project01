@@ -21,7 +21,7 @@ from settings import datafolder
 comparisonfile = f'{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx'
 
 
-sheets = ['GMSL', 'Steric', 'Glaciers', 'GrIS', 'AIS', 'WAIS', 'EAIS', 'PEN']
+sheets = ['GMSL', 'Steric', 'Glaciers', 'GrIS', 'AIS', 'WAIS', 'EAIS', 'PEN', 'AllButGlaciers']
 
 output = []
 for sheet in sheets:

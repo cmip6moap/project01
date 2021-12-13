@@ -26,7 +26,7 @@ output=[]
 
 ptiles = [5,17,50,83,95] # percentiles of interest.
 
-components = ['Glaciers', 'GrIS', 'WAIS', 'EAIS', 'PEN', 'AIS', 'Land Ice', 'Steric', 'GMSL']
+components = ['Glaciers', 'GrIS', 'WAIS', 'EAIS', 'PEN', 'AIS', 'Land Ice', 'Steric', 'AllButGlaciers', 'GMSL']
 
 
 def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False):
@@ -87,7 +87,7 @@ def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False):
 fig1 = plt.figure(figsize = [4,6], facecolor='white', dpi=300)
 plt.gca().set_frame_on(False)
 plt.gca().axes.get_yaxis().set_visible(False)
-plt.xlim([-.5, 9])
+plt.xlim([-.5, 9.2])
 plt.gca().set_axisbelow(True)
 
 yrow = 0
@@ -103,11 +103,13 @@ for component in components:
             subset = iceemu[iceemu.ice_component.isin(['EAIS','WAIS','PEN'])]
         elif component in ['Land Ice', 'GMSL']:
             subset = iceemu
+        elif component == 'AllButGlaciers':
+            subset = iceemu[iceemu.ice_component != 'Glaciers']
         else:
             continue
         g = subset.groupby(['model_key','startyr','endyr'], as_index = False)
         subset = g.agg({'TSLS': np.sum})
-        if component == 'GMSL':
+        if component in ['GMSL', 'AllButGlaciers']:
             #at this point subset is land_ice - now add steric
             for index, row in subset.iterrows():
                 s = steric[(steric.startyr == row.startyr) & (steric.endyr == row.endyr)]
