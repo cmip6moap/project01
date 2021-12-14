@@ -39,4 +39,4 @@ def plot_comparison(sheet_name = 'GMSL'):
 
 if __name__ == "__main__":
     # this is some test code:
-    plot_comparison()
+    plot_comparison('GIC')

@@ -18,6 +18,8 @@ from tqdm import tqdm
 from steric_tools import parse_run
 
 
+print('combine_v2.py')
+
 
 # This file combines ice with steric.
 #
@@ -57,7 +59,7 @@ tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
 ice = {'WAIS': None,
         'EAIS': None,
         'PEN': None,
-        'Glaciers': None,
+        'GIC': None,
         'GrIS': None}
 
 tsls_steric = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_steric.csv')
@@ -134,7 +136,7 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
         "WAIS": irow[irow.region == 'WAIS'].iloc[0].dSdt,  #NOTE THIS ASSUMES matching order between files!!!!
         "EAIS": irow[irow.region == 'EAIS'].iloc[0].dSdt,
         "PEN": irow[irow.region == 'PEN'].iloc[0].dSdt,
-        "Glaciers": irow[irow.ice_source == 'Glaciers'].iloc[0].dSdt,
+        "GIC": irow[irow.ice_source == 'GIC'].iloc[0].dSdt,
         "GrIS": irow[irow.ice_source == 'GrIS'].iloc[0].dSdt
     }
     output.append(newrow)
@@ -142,7 +144,7 @@ for (sample,scenario,startyr,endyr),irow in tqdm(grouped_ice):
 output = pd.DataFrame(output)
 
 output['AIS'] = output['EAIS'] + output['WAIS'] + output['PEN']
-output['GMSL'] = output['Steric'] + output['GrIS'] + output['Glaciers'] + output['EAIS'] + output['WAIS'] + output['PEN']
+output['GMSL'] = output['Steric'] + output['GrIS'] + output['GIC'] + output['EAIS'] + output['WAIS'] + output['PEN']
 
 fname = f'{datafolder}/processed_Data/combined/combined_dSdt_T.csv'
 

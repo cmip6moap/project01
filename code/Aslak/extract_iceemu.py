@@ -38,6 +38,11 @@ def extractRateVsT(
     shortname = ice_source
     if region:
         shortname = region
+    print(f'\n------{shortname}--------')
+    renamed_ice_source = ice_source
+    if renamed_ice_source=='Glaciers':
+        renamed_ice_source = 'GIC'
+        shortname = 'GIC'
 
     filename = f"{datafolder}/processed_data/ExtractedFromTamsin/{shortname}_risk{risk_averse}.csv"
 
@@ -53,7 +58,7 @@ def extractRateVsT(
     files = glob.glob(folder + "/projections_*.csv")
 
     # this gives the 2015 temperature relative to the baseline temp as defined in hadcrut5.
-    T2015 = hadcrut5.getTstats(2010, 2019)["Tanom"]
+    T2015 = hadcrut5.getTstats(2011, 2019)["Tanom"]
 
     output = []
     for file in tqdm(files):
@@ -76,7 +81,7 @@ def extractRateVsT(
 
         Q = V.groupby(by=["sample"])
 
-        for sampleix, sample in tqdm(Q):
+        for sampleix, sample in tqdm(Q, leave=False):
             t = sample.year.values
             T = sample.GSAT.values + T2015  # Apply base-line correction (Tamsin says her numbers are relative to 2015. )
 
@@ -93,8 +98,9 @@ def extractRateVsT(
 
                 Tavg = np.mean(T[ix[0] : ix[-1] + 1])
                 dTdt = np.polyfit(t[ix[0] : ix[-1] + 1],T[ix[0] : ix[-1] + 1],1)[0]
+
                 newrow = {
-                    "ice_source": ice_source,
+                    "ice_source": renamed_ice_source,
                     "region": region,
                     "sample": sampleix,
                     "scenario": scenario,
@@ -115,12 +121,12 @@ def extractRateVsT(
 
 
 
-AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=False)
 GrIS = extractRateVsT(ice_source="GrIS", region="", risk_averse=False)
 Glaciers = extractRateVsT(ice_source="Glaciers", region="", risk_averse=False)
 Pen = extractRateVsT(ice_source="AIS", region="PEN", risk_averse=False)
 EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=False)
 WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=False)
+AIS = extractRateVsT(ice_source="AIS", region="", risk_averse=False)
 
 EAIS = extractRateVsT(ice_source="AIS", region="EAIS", risk_averse=True)
 WAIS = extractRateVsT(ice_source="AIS", region="WAIS", risk_averse=True)

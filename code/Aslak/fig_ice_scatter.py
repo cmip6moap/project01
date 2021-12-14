@@ -23,7 +23,7 @@ from plot_comparison_data import plot_comparison
 
 
 tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
-components = ['GrIS','WAIS', 'EAIS', 'PEN', 'Glaciers']
+components = ['GrIS','WAIS', 'EAIS', 'PEN', 'GIC']
 
 risk = False
 

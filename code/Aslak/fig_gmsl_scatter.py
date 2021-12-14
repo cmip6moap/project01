@@ -18,7 +18,6 @@ from plot_comparison_data import plot_comparison
 fname = f'{datafolder}/processed_Data/combined/combined_dSdt_T.csv'
 df = pd.read_csv(fname)
 
-
 plt.figure(dpi=300)
 G = df.groupby(["scenario", "startyr", "endyr"])
 for groupix, g in G:

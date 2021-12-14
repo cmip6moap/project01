@@ -24,7 +24,7 @@ tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
 ice = {'WAIS': None,
         'EAIS': None,
         'PEN': None,
-        'Glaciers': None,
+        'GIC': None,
         'GrIS': None}
 
 risk = False
