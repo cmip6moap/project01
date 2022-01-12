@@ -14,12 +14,14 @@ import extract_steric
 import extract_iceemu
 import combine_v2
 
+import extract_iceemu_sensitivity
+import extract_steric_sensitivity
+import extract_comparison_estimates
+
+
 import fig_ice_scatter
 import fig_steric_scatter
 import fig_gmsl_scatter
 
-import extract_iceemu_sensitivity
-import extract_steric_sensitivity
 
-import extract_comparison_estimates
 import fig_tsls_histograms

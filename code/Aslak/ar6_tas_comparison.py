@@ -20,26 +20,33 @@ from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
 import glob
 
-T21 = []
-i=0
-for f in glob.glob(f'{datafolder}/raw_data/CMIP6_TAS/*_ssp585_i1p1f1_00.dat'):
-    tas = pd.read_csv(f,comment='#',index_col=0,delim_whitespace=True,header=None)
-    tas = tas.mean(axis=1)
-    tas = tas- tas[tas.index<=1900].mean()
-    if i==0:
-        h = plt.plot(tas,color='b',alpha=0.5,label='CMIP6')
-    else:
-        h = plt.plot(tas,color='b',alpha=0.5)
-    i=i+1
 
-f = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_Historical.csv"
-tas_hist =pd.read_csv(f,index_col=0)
-scenario = 'SSP5-8.5'
-f = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_{scenario.replace('-','_').replace('.','_')}.csv"
-tas_proj =pd.read_csv(f,index_col=0)
-plt.plot(tas_hist.Mean,color='k',label='AR6 fig. SPM08')
-plt.plot(tas_proj,color='k')
-plt.xlabel('time')
-plt.ylabel('GMST')
-plt.legend()
-tas_proj.iloc[-1]
+scenarios = {'SSP1-1.9': [],
+             'SSP1-2.6': [],
+             'SSP2-4.5': [],
+             'SSP3-7.0': ,
+             'SSP5-8.5':}
+for scenario in scenarios:
+    tasfile = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_{scenario.replace('-','_').replace('.','_')}.csv"
+    tas =pd.read_csv(tasfile)
+
+
+if True:
+    Sar6 = pd.read_csv(f"{datafolder}/raw_data/AR6 Fig spm08ad/global_sea_level_projected.csv",index_col='Year')
+    scenarios = ['SSP1-1.9', 'SSP1-2.6', 'SSP2-4.5', 'SSP3-7.0', 'SSP5-8.5']
+    tasfile = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_Historical.csv"
+    tas =pd.read_csv(tasfile)
+    tasbase = tas[(tas.Year>=baseline_period[0]) & (tas.Year<=baseline_period[1])].mean()
+    for scenario in scenarios:
+        tasfile = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_{scenario.replace('-','_').replace('.','_')}.csv"
+        tas =pd.read_csv(tasfile)
+        s = Sar6[f'{scenario} Central']
+        dSdt = (s[2100]-s[2050])/50
+        t = tas[(tas.Year>=2050) & (tas.Year<=2100)].mean() - tasbase
+        plt.plot(t['Mean'],dSdt*1000,'bo')
+        # dSdt = (s[2050]-s[2020])/30
+        # t = tas[(tas.Year>=2020) & (tas.Year<=2050)].mean() - tasbase
+        # plt.plot(t['Mean'],dSdt*1000,'mo')
+        # dSdt = (s[2100]-s[2020])/70
+        # t = tas[(tas.Year>=2020) & (tas.Year<=2100)].mean() - tasbase
+        # plt.plot(t['Mean'],dSdt*1000,'ro')

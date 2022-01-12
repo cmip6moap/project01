@@ -23,15 +23,22 @@ from plot_comparison_data import plot_comparison
 
 
 tfolder = f'{datafolder}/processed_data/ExtractedFromTamsin/'
-components = ['GrIS','WAIS', 'EAIS', 'PEN', 'GIC']
+# components = ['GrIS','WAIS', 'EAIS', 'PEN', 'GIC']
+components = ['GrIS','WAIS', 'EAIS', 'GIC']
 
 risk = False
+
+# fig = plt.figure(dpi=300,size=[7,10])
+# ax_mosaic = fig.subplot_mosaic([['GrIS','GIC'],['WAIS','EAIS']])
+
+
 
 for component in components:
     fname = f'{tfolder}{component}_risk{risk}.csv'
     if not os.path.isfile(fname):
         fname = fname.replace('True','False')
         continue
+    # plt.sca(ax_mosaic[component])
 
     df = pd.read_csv(fname)
     df = df.loc[df.scenario != 'SSPNDC']

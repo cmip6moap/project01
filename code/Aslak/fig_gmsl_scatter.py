@@ -1,18 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import numpy as np
-from glob import glob
 import pandas as pd
 import matplotlib.pyplot as plt
-from tqdm import tqdm
-import corner
-import hadcrut5
-import re
-import os
 from settings import scenariocolors, baseline_period, datafolder
 from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
-
 
 
 fname = f'{datafolder}/processed_Data/combined/combined_dSdt_T.csv'
@@ -51,17 +44,29 @@ if True:
     tasfile = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_Historical.csv"
     tas =pd.read_csv(tasfile)
     tasbase = tas[(tas.Year>=baseline_period[0]) & (tas.Year<=baseline_period[1])].mean()
+
+    Tavg = []
+    dSdt = []
     for scenario in scenarios:
         tasfile = f"{datafolder}/raw_data/AR6 Fig spm08ad/tas_global_{scenario.replace('-','_').replace('.','_')}.csv"
-        tas =pd.read_csv(tasfile)
+        tas = pd.read_csv(tasfile)
         s = Sar6[f'{scenario} Central']
-        dSdt = (s[2100]-s[2050])/50
-        t = tas[(tas.Year>=2050) & (tas.Year<=2100)].mean() - tasbase
-        plt.plot(t['Mean'],dSdt*1000,'bo')
+        dSdt.append( (s[2100]-s[2050])*1000/50)
+        v = tas[(tas.Year>=2050) & (tas.Year<=2100)].mean() - tasbase
+        v = v[['5%','Mean', '95%']].to_numpy()
+        Tavg.append(v)
+    Tavg = np.array(Tavg)
+    p = np.polyfit(Tavg[:,1],dSdt,1)
+
+    plt.plot(Tavg[:,1], np.polyval(p,Tavg[:,1]),'k',alpha=0.3,linewidth=3,label='AR6 2050-2100')
+    plt.plot([-1,np.min(Tavg[:,1])], np.polyval(p,[-1,np.min(Tavg[:,1])]),'k--',alpha=0.15,linewidth=3)
+
+    print(f'AR6 TSLS\t{p[0]:.1f} mm/yr/K')
+    print(f'AR6 T0  \t{-p[1]/p[0]:.2f}K')
         # dSdt = (s[2050]-s[2020])/30
         # t = tas[(tas.Year>=2020) & (tas.Year<=2050)].mean() - tasbase
         # plt.plot(t['Mean'],dSdt*1000,'mo')
-        # dSdt = (s[2100]-s[2020])/70
+        # dSdt = (s[2100]-s[2020])/80
         # t = tas[(tas.Year>=2020) & (tas.Year<=2100)].mean() - tasbase
         # plt.plot(t['Mean'],dSdt*1000,'ro')
 

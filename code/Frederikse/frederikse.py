@@ -2,6 +2,8 @@
 # I’ve attached a figure with all the time series that went into our estimates. GP = Greenland peripheral glaciers, M&D = Missing & Disappeared glaciers. I’ve also attached a data file with all the trends that I computed over the AR6 periods that also include the uncertainties. It’s a Python/numpy file, and this command should load the file:
 
 import numpy as np
+import re
+import matplotlib.pyplot as plt
 stats = np.load('stats_basin_global.npy',allow_pickle=True).all()
 
 # Then, the trends for observed GMSL are stored as dictionaries within this file. To show all the components, then run:
@@ -34,12 +36,25 @@ stats = np.load('stats_basin_global.npy',allow_pickle=True).all()
 std290 = 3.2897
 
 for name,element in stats["global"].items():
+    S = element["tseries"]
+    t = np.arange(len(S))+1900
     for key,row in element.items():
         if not (key.startswith('trend')):
             continue
         period = key.replace('trend_','').replace('_','\t')
         sigma = (row[2]-row[1])/std290
-        print(f'{name}\t{period}\t{row[0]:.3f}\t{sigma:.3f}')
+
+        #also calculate our own trend....
+        yrs=[float(x) for x in period.split('\t')]
+        ix = (t>=yrs[0]) & (t<=yrs[1])
+        if np.any(np.isnan(S[ix,1])):
+            p1=[np.nan,np.nan]
+            psigma=np.nan
+        else:
+            (p1,C) = np.polyfit(t[ix]-2000,S[ix,1],1,cov=True)
+            psigma = np.polyfit(t[ix]-2000,(S[ix,0]-S[ix,2])/std290,1)
+            psigma = np.sqrt(psigma[0]**2+C[0,0])
+        print(f'{name}\t{period}\t{row[0]:.3f}\t{sigma:.3f}\t{p1[0]:.3f}\t{psigma:.3f}')
 # Out[18]: dict_keys(['obs', 'steric', 'grd_glac', 'grd_GrIS', 'grd_AIS', 'grd_tws', 'grd_total', 'grd_tws_natural', 'grd_tws_gwd', 'grd_tws_dam', 'grd_ice', 'altimetry', 'budget', 'diff', 'obs_steric'])
 
 # stats[“global”][“grd_glac”] is the glacier contribution, grd_GrIS = Greenland, “steric” (not obs_steric) is the steric component etc.
@@ -47,11 +62,12 @@ for name,element in stats["global"].items():
 # Hope this helps!
 
 # Cheers,
-import matplotlib.pyplot as plt
+
 
 # Thomas
 s1 = stats["global"]["obs_steric"]["tseries"]
+t = np.arange(len(s1))+1900
 s2 = stats["global"]["steric"]["tseries"]
-plt.plot(s1,label='obs_steric')
-plt.plot(s2,label='steric')
+plt.plot(t,s1,label='obs_steric')
+plt.plot(t,s2,label='steric')
 plt.legend()

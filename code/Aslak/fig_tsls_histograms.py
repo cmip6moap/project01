@@ -14,7 +14,7 @@ import matplotlib.patheffects as PathEffects
 
 iceemu = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_ice_emulator.csv')
 steric = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_steric.csv')
-comparisondata = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_observations.csv',index_col = 'component')
+comparisondata = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_observations.csv')
 
 #should some other script derive tsls?
 experts = pd.read_excel(f'{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx',sheet_name="Expert", comment="#")
@@ -29,7 +29,7 @@ ptiles = [5,17,50,83,95] # percentiles of interest.
 components = ['GIC', 'GrIS', 'WAIS', 'EAIS', 'PEN', 'AIS', 'Land Ice', 'Steric', 'All but GIC', 'GMSL']
 
 
-def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False):
+def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False, mu=np.nan, sigma=np.nan):
     mx = plt.xlim()[1]
     if name in periodcolors:
         color = periodcolors[name]
@@ -46,6 +46,8 @@ def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False):
             "p50": ptilerng[2],
             "p83": ptilerng[3],
             "p95": ptilerng[4],
+            "mu": mu,
+            "sigma": sigma
     }
 
 
@@ -117,28 +119,34 @@ for component in components:
                 stericTSLS = s.TSLS.sample(1).values
                 subset.at[index,'TSLS'] = subset.at[index,'TSLS'] + stericTSLS
 
+    #OBS
+    if component in comparisondata.component.unique():
+        for ii,subset_obs in comparisondata[comparisondata['component']==component].iterrows():
+        #if component in comparisondata.index:
+            #subset_obs = comparisondata.loc[component]
+            mu = subset_obs.TSLS*1000
+            sigma = subset_obs.sigmaTSLS*1000
+            ps= [subset_obs.TSLS_P5, subset_obs.TSLS_P17, subset_obs.TSLS_P50, subset_obs.TSLS_P83, subset_obs.TSLS_P95]
+            lbl = f"{subset_obs['period start']:.0f}-{subset_obs['period end']:.0f}"
+            myboxplot(yrow,np.array(ps)*1000,'observations',component,rightlabel=lbl,mu=mu,sigma=sigma)
+            yend = yrow
+            yrow = yrow + 1
+
 
     #MODELS
+#    subset = subset.sort_values('startyr')
     for startyr, group in subset.groupby('startyr'):
         if group.shape[0]<2:
             continue
         ps = np.percentile(group.TSLS*1000,ptiles)
         lbl = f'{group.startyr.iloc[0]}-{group.endyr.iloc[0]}'
-        myboxplot(yrow,ps,name='models',component=component,rightlabel=lbl)
+        myboxplot(yrow,ps,name='models',component=component,rightlabel=lbl,
+                  mu = np.mean(group.TSLS*1000), sigma = np.std(group.TSLS*1000))
         yend = yrow
         yrow = yrow + 1
 
 
-    #OBS
-    if component in comparisondata.index:
-        subset_obs = comparisondata.loc[component]
-        mu = subset_obs.TSLS*1000
-        sigma = subset_obs.sigmaTSLS*1000
-        ps= [subset_obs.TSLS_P5, subset_obs.TSLS_P17, subset_obs.TSLS_P50, subset_obs.TSLS_P83, subset_obs.TSLS_P95]
-        lbl = f"{subset_obs['period start']:.0f}-{subset_obs['period end']:.0f}"
-        myboxplot(yrow,np.array(ps)*1000,'observations',component,lbl)
-        yend = yrow
-        yrow = yrow + 1
+
 
     #experts
     ex = experts.loc[experts.Component == component]
@@ -160,10 +168,10 @@ for component in components:
 
 
 rng =[np.nan,6.1,np.nan,9,np.nan]
-myboxplot(1.5,rng, '1850-2014', rightlabel='models historical', islabel=True)
-myboxplot(2.5,rng, '2016-2050', rightlabel='models early $21^{st}$C', islabel=True)
-myboxplot(3.5,rng, '2051-2100', rightlabel='models late $21^{st}$C', islabel=True)
-myboxplot(4.5,rng, 'observations', rightlabel='observations', islabel=True)
+myboxplot(1.5,rng, 'observations', rightlabel='observations', islabel=True)
+myboxplot(2.5,rng, '1850-2014', rightlabel='models historical', islabel=True)
+myboxplot(3.5,rng, '2016-2050', rightlabel='models early $21^{st}$C', islabel=True)
+myboxplot(4.5,rng, '2051-2100', rightlabel='models late $21^{st}$C', islabel=True)
 myboxplot(5.5,rng, 'experts', rightlabel='experts $21^{st}$C', islabel=True)
 
 

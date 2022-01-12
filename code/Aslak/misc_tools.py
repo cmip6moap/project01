@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 import matplotlib.transforms as transforms
+import re
 
 def confidence_ellipse(x, y, n_std=1.0, weights=None, ax=None, facecolor='none', **kwargs):
     """
@@ -36,6 +37,9 @@ def confidence_ellipse(x, y, n_std=1.0, weights=None, ax=None, facecolor='none',
 
     if not ax:
         ax = plt.gca()
+
+    if 'label' in kwargs:
+        kwargs['label'] = re.sub(r'SSP(\d)(\d)(\d)',r'SSP\1-\2.\3', kwargs['label'])
 
     if weights is None:
         cov = np.cov(x, y)

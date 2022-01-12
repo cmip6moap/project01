@@ -32,41 +32,50 @@ for sheet in sheets:
     df['Tanom'] = df.apply(lambda row: hadcrut5.getTstats(row['Period start'],row['Period start'])['Tanom'], axis=1)
     df['sigmaT'] = df.apply(lambda row: hadcrut5.getTstats(row['Period start'],row['Period start'])['sigmaT'], axis=1)
 
-    x = df['Tanom'].values
-    y = df['Rate'].values/1000 #m/yr
-    sigmax = df['sigmaT'].values
-    sigmay = df['RateSigma'].values/1000 #m/yr
+    for min_year in (1000,):#,1990):
+        ix = df['Period start']>min_year
+        subset = df[ix]
 
-    #note this assumes independent errors...
-    Nmc = 1000
-    slopes = np.full((Nmc),np.nan)
-    T0s = np.full((Nmc),np.nan)
-    o_intercept = np.full((Nmc),np.nan)
-    for ii in range(Nmc):
-        p = np.polyfit(x+np.random.randn(x.size)*sigmax,
-                       y+np.random.randn(y.size)*sigmay,1,w=1/sigmay)
-        slopes[ii] = p[0]
-        o_intercept[ii] = p[1]
-        T0s[ii] = -p[1] / p[0]
+        x = subset['Tanom'].values
+        y = subset['Rate'].values/1000 #m/yr
+        sigmax = subset['sigmaT'].values
+        sigmay = subset['RateSigma'].values/1000 #m/yr
 
-    ptiles = np.percentile(slopes,[5,17,50,83,95])
+        if (sheet=='GrIS') or (sheet=='AIS'):
+            ix = df['Period start']>1990
+            p = np.polyfit(x[ix],y[ix],1,w=1/sigmay[ix])
+            print(f'{sheet} observational TSLS post 1990: {p[0]*1000:.2f}')
 
-    output.append({
-            'component': sheet,
-            'period start': df['Period start'].min(),
-            'period end': df['Period end'].max(),
-            'TSLS': np.mean(slopes),
-            'T0': np.mean(T0s),
-            'Srate0': np.mean(o_intercept),
-            'sigmaTSLS': np.std(slopes),
-            'TSLS_P5': ptiles[0],
-            'TSLS_P17': ptiles[1],
-            'TSLS_P50': ptiles[2],
-            'TSLS_P83': ptiles[3],
-            'TSLS_P95': ptiles[4],
-            'sigmaT0': np.std(T0s),
-            'sigmaSrate0': np.std(o_intercept),
-        })
+        #note this assumes independent errors...
+        Nmc = 1000
+        slopes = np.full((Nmc),np.nan)
+        T0s = np.full((Nmc),np.nan)
+        o_intercept = np.full((Nmc),np.nan)
+        for ii in range(Nmc):
+            p = np.polyfit(x+np.random.randn(x.size)*sigmax,
+                           y+np.random.randn(y.size)*sigmay,1,w=1/sigmay)
+            slopes[ii] = p[0]
+            o_intercept[ii] = p[1]
+            T0s[ii] = -p[1] / p[0]
+
+        ptiles = np.percentile(slopes,[5,17,50,83,95])
+
+        output.append({
+                'component': sheet,
+                'period start': subset['Period start'].min(),
+                'period end': subset['Period end'].max(),
+                'TSLS': np.mean(slopes),
+                'T0': np.mean(T0s),
+                'Srate0': np.mean(o_intercept),
+                'sigmaTSLS': np.std(slopes),
+                'TSLS_P5': ptiles[0],
+                'TSLS_P17': ptiles[1],
+                'TSLS_P50': ptiles[2],
+                'TSLS_P83': ptiles[3],
+                'TSLS_P95': ptiles[4],
+                'sigmaT0': np.std(T0s),
+                'sigmaSrate0': np.std(o_intercept),
+            })
 
 output = pd.DataFrame(output)
 

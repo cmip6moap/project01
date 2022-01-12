@@ -59,7 +59,7 @@ plot_comparison(sheet_name)
 plt.title(f'{sheet_name}')
 plt.xlabel("Temporal average of GMST (°C)")
 plt.ylabel("$dS/dt$ (mm/yr)")
-plt.legend(fontsize='small')
+plt.legend(fontsize='small',loc='lower right')
 plt.show()
 
 
