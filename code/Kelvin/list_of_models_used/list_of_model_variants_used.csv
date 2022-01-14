@@ -1,0 +1,120 @@
+model,scenario,variant
+ACCESS-CM2,historical,r1i1p1f1
+ACCESS-ESM1-5,historical,r1i1p1f1
+BCC-CSM2-MR,historical,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+BCC-ESM1,historical,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+CAMS-CSM1-0,historical,r1i1p1f1
+CESM2,historical,"r2i1p1f1, r4i1p1f1, r6i1p1f1, r8i1p1f1, r11i1p1f1"
+CIESM,historical,r1i1p1f1
+CMCC-CM2-SR5,historical,r1i1p1f1
+CMCC-ESM2,historical,r1i1p1f1
+CanESM5,historical,"r1i1p1f1, r1i1p2f1, r2i1p1f1, r2i1p2f1, r3i1p1f1, r3i1p2f1, r4i1p1f1, r4i1p2f1, r5i1p1f1, r5i1p2f1, r6i1p1f1, r6i1p2f1, r7i1p1f1, r7i1p2f1, r8i1p1f1, r8i1p2f1, r9i1p1f1, r9i1p2f1, r10i1p1f1, r10i1p2f1, r11i1p1f1, r12i1p1f1, r13i1p1f1, r14i1p1f1, r15i1p1f1, r16i1p1f1, r17i1p1f1, r18i1p1f1, r19i1p1f1, r20i1p1f1, r21i1p1f1, r22i1p1f1, r23i1p1f1, r24i1p1f1, r25i1p1f1"
+E3SM-1-1,historical,r1i1p1f1
+E3SM-1-1-ECA,historical,r1i1p1f1
+EC-Earth3-CC,historical,r1i1p1f1
+EC-Earth3-Veg,historical,r1i1p1f1
+FGOALS-f3-L,historical,r1i1p1f1
+FGOALS-g3,historical,r1i1p1f1
+FIO-ESM-2-0,historical,r1i1p1f1
+GFDL-CM4,historical,r1i1p1f1
+GFDL-ESM4,historical,r1i1p1f1
+GISS-E2-1-G,historical,"r1i1p1f1, r2i1p1f1, r3i1p1f1, r4i1p1f1, r5i1p1f1, r6i1p1f1, r7i1p1f1, r8i1p1f1, r9i1p1f1, r10i1p1f1"
+GISS-E2-1-G-CC,historical,r1i1p1f1
+HadGEM3-GC31-LL,historical,"r1i1p1f3, r2i1p1f3, r3i1p1f3, r4i1p1f3, r5i1p1f3"
+HadGEM3-GC31-MM,historical,"r1i1p1f3, r2i1p1f3, r3i1p1f3, r4i1p1f3"
+INM-CM4-8,historical,r1i1p1f1
+INM-CM5-0,historical,r1i1p1f1
+IPSL-CM5A2-INCA,historical,r1i1p1f1
+IPSL-CM6A-LR,historical,"r1i1p1f1, r2i1p1f1, r3i1p1f1, r4i1p1f1, r5i1p1f1, r6i1p1f1, r7i1p1f1, r8i1p1f1, r9i1p1f1"
+IPSL-CM6A-LR-INCA,historical,r1i1p1f1
+MCM-UA-1-0,historical,r1i1p1f1
+MIROC6,historical,r1i1p1f1
+MPI-ESM-1-2-HAM,historical,r1i1p1f1
+MPI-ESM1-2-HR,historical,r1i1p1f1
+MPI-ESM1-2-LR,historical,r1i1p1f1
+MRI-ESM2-0,historical,r1i1p1f1
+NESM3,historical,r1i1p1f1
+NorESM2-LM,historical,r1i1p1f1
+NorESM2-MM,historical,r1i1p1f1
+SAM0-UNICON,historical,r1i1p1f1
+UKESM1-0-LL,historical,"r1i1p1f2, r2i1p1f2, r3i1p1f2, r4i1p1f2, r5i1p1f3, r6i1p1f3, r7i1p1f3, r8i1p1f2, r9i1p1f2, r10i1p1f2, r11i1p1f2, r12i1p1f2, r13i1p1f2, r16i1p1f2, r17i1p1f2, r18i1p1f2, r19i1p1f2"
+ACCESS-CM2,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+ACCESS-ESM1-5,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+BCC-CSM2-MR,SSP126,r1i1p1f1
+CAMS-CSM1-0,SSP126,"r1i1p1f1, r2i1p1f1"
+CIESM,SSP126,r1i1p1f1
+CMCC-ESM2,SSP126,r1i1p1f1
+CanESM5,SSP126,"r1i1p1f1, r1i1p2f1, r2i1p1f1, r2i1p2f1, r3i1p1f1, r3i1p2f1, r4i1p1f1, r4i1p2f1, r5i1p1f1, r5i1p2f1, r6i1p1f1, r6i1p2f1, r7i1p1f1, r7i1p2f1, r8i1p1f1, r8i1p2f1, r9i1p1f1, r9i1p2f1, r10i1p1f1, r10i1p2f1"
+EC-Earth3-Veg,SSP126,r1i1p1f1
+FGOALS-f3-L,SSP126,r1i1p1f1
+FGOALS-g3,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+FIO-ESM-2-0,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+GFDL-ESM4,SSP126,r1i1p1f1
+HadGEM3-GC31-LL,SSP126,r1i1p1f3
+HadGEM3-GC31-MM,SSP126,r1i1p1f3
+INM-CM4-8,SSP126,r1i1p1f1
+INM-CM5-0,SSP126,r1i1p1f1
+IPSL-CM5A2-INCA,SSP126,r1i1p1f1
+IPSL-CM6A-LR,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MIROC6,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MPI-ESM1-2-HR,SSP126,"r1i1p1f1, r2i1p1f1"
+MPI-ESM1-2-LR,SSP126,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MRI-ESM2-0,SSP126,r1i1p1f1
+NESM3,SSP126,r1i1p1f1
+NorESM2-LM,SSP126,r1i1p1f1
+NorESM2-MM,SSP126,r1i1p1f1
+UKESM1-0-LL,SSP126,"r1i1p1f2, r2i1p1f2, r3i1p1f2, r4i1p1f2, r8i1p1f2, r9i1p1f2, r10i1p1f2, r11i1p1f2, r12i1p1f2, r16i1p1f2, r17i1p1f2, r18i1p1f2, r19i1p1f2"
+ACCESS-CM2,SSP245,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+ACCESS-ESM1-5,SSP245,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+BCC-CSM2-MR,SSP245,r1i1p1f1
+CAMS-CSM1-0,SSP245,"r1i1p1f1, r2i1p1f1"
+CIESM,SSP245,r1i1p1f1
+CMCC-CM2-SR5,SSP245,r1i1p1f1
+CMCC-ESM2,SSP245,r1i1p1f1
+CanESM5,SSP245,"r1i1p1f1, r1i1p2f1, r2i1p1f1, r2i1p2f1, r3i1p1f1, r3i1p2f1, r4i1p1f1, r4i1p2f1, r5i1p1f1, r5i1p2f1, r6i1p1f1, r6i1p2f1, r7i1p1f1, r7i1p2f1, r8i1p1f1, r8i1p2f1, r9i1p1f1, r9i1p2f1, r10i1p1f1, r10i1p2f1"
+EC-Earth3-CC,SSP245,r1i1p1f1
+EC-Earth3-Veg,SSP245,r1i1p1f1
+FGOALS-g3,SSP245,r1i1p1f1
+FIO-ESM-2-0,SSP245,r1i1p1f1
+GFDL-CM4,SSP245,r1i1p1f1
+GFDL-ESM4,SSP245,r1i1p1f1
+HadGEM3-GC31-LL,SSP245,r1i1p1f3
+INM-CM4-8,SSP245,r1i1p1f1
+INM-CM5-0,SSP245,r1i1p1f1
+IPSL-CM6A-LR,SSP245,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MIROC6,SSP245,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MPI-ESM1-2-HR,SSP245,r1i1p1f1
+MPI-ESM1-2-LR,SSP245,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MRI-ESM2-0,SSP245,r1i1p1f1
+NESM3,SSP245,r1i1p1f1
+NorESM2-LM,SSP245,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+NorESM2-MM,SSP245,r1i1p1f1
+UKESM1-0-LL,SSP245,"r1i1p1f2, r2i1p1f2, r3i1p1f2, r4i1p1f2, r8i1p1f2"
+ACCESS-CM2,SSP585,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+ACCESS-ESM1-5,SSP585,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+BCC-CSM2-MR,SSP585,r1i1p1f1
+CAMS-CSM1-0,SSP585,"r1i1p1f1, r2i1p1f1"
+CIESM,SSP585,r1i1p1f1
+CMCC-CM2-SR5,SSP585,r1i1p1f1
+CMCC-ESM2,SSP585,r1i1p1f1
+CanESM5,SSP585,"r1i1p1f1, r1i1p2f1, r2i1p1f1, r2i1p2f1, r3i1p1f1, r3i1p2f1, r4i1p1f1, r4i1p2f1, r5i1p1f1, r5i1p2f1, r6i1p2f1, r7i1p2f1, r8i1p1f1, r8i1p2f1, r9i1p2f1, r10i1p2f1"
+EC-Earth3-CC,SSP585,r1i1p1f1
+EC-Earth3-Veg,SSP585,r1i1p1f1
+FGOALS-f3-L,SSP585,r1i1p1f1
+FGOALS-g3,SSP585,r1i1p1f1
+FIO-ESM-2-0,SSP585,r1i1p1f1
+GFDL-CM4,SSP585,r1i1p1f1
+GFDL-ESM4,SSP585,r1i1p1f1
+HadGEM3-GC31-LL,SSP585,"r1i1p1f3, r2i1p1f3, r3i1p1f3, r4i1p1f3"
+HadGEM3-GC31-MM,SSP585,"r1i1p1f3, r2i1p1f3, r3i1p1f3, r4i1p1f3"
+INM-CM4-8,SSP585,r1i1p1f1
+INM-CM5-0,SSP585,r1i1p1f1
+IPSL-CM6A-LR,SSP585,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MIROC6,SSP585,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MPI-ESM1-2-HR,SSP585,r1i1p1f1
+MPI-ESM1-2-LR,SSP585,"r1i1p1f1, r2i1p1f1, r3i1p1f1"
+MRI-ESM2-0,SSP585,r1i1p1f1
+NESM3,SSP585,r1i1p1f1
+NorESM2-LM,SSP585,r1i1p1f1
+NorESM2-MM,SSP585,r1i1p1f1
+UKESM1-0-LL,SSP585,"r1i1p1f2, r2i1p1f2, r3i1p1f2, r4i1p1f2, r8i1p1f2"
