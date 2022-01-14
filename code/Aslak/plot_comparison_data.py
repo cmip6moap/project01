@@ -15,7 +15,7 @@ from settings import datafolder
 
 
 
-def plot_comparison(sheet_name = 'GMSL', show_experts=False):
+def plot_comparison(sheet_name = 'GMSL', show_experts=False, color='k', show_line = False):
 
     comparison_data = pd.read_excel(
         f"{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
@@ -29,13 +29,18 @@ def plot_comparison(sheet_name = 'GMSL', show_experts=False):
             row["Rate"],
             xerr=Trow["sigmaT"],
             yerr=row["RateSigma"],
-            c="k",
+            c=color,
             marker='o',
             markersize=5,
             markerfacecolor='#777777',
             label=lbl
         )
-        plt.text(Trow["Tanom"], row["Rate"] + row["RateSigma"], f' {row["Name"]}',alpha=.6,rotation=90,horizontalalignment='center',verticalalignment='bottom',fontsize=8)
+        plt.text(Trow["Tanom"], row["Rate"] + row["RateSigma"], f' {row["Name"]}',
+                 alpha=.6,rotation=90,
+                 horizontalalignment='center',
+                 verticalalignment='bottom',
+                 color=color,
+                 fontsize=8)
         lbl = None
 
     if show_experts:
@@ -54,5 +59,6 @@ def plot_comparison(sheet_name = 'GMSL', show_experts=False):
 
 if __name__ == "__main__":
     # this is some test code:
-    plot_comparison('AIS')
+    plot_comparison('GMSL')
+    plot_comparison('G&C GMSL', color='r')
     plt.legend()

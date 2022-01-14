@@ -5,7 +5,7 @@ Created on Fri Oct  1 14:47:14 2021
 @author: ag
 """
 
-from settings import datafolder, periodcolors
+from settings import datafolder, periodcolors, figurefolder
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -58,11 +58,11 @@ def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False, m
                   length_includes_head=True,
                   color=color,
                   linewidth=2,clip_on = False,alpha=0.4)
-        # plt.text(mx,y,f' {ptilerng[-1]:.0f}',
-        #      fontsize='xx-small',alpha = 0.7,
-        #      horizontalalignment = 'left',
-        #      color=color,
-        #      verticalalignment='center',clip_on = False)
+        plt.text(mx,y,f' {ptilerng[-1]:.0f}',
+              fontsize='xx-small',alpha = 0.5,
+              horizontalalignment = 'left',
+              color=color,
+              verticalalignment='center',clip_on = False)
         ptilerng[-1]=np.nan
         ptilerng[0]=np.nan
     else:
@@ -89,7 +89,7 @@ def myboxplot(y, ptilerng, name, component='', rightlabel='', islabel = False, m
 fig1 = plt.figure(figsize = [4,6], facecolor='white', dpi=300)
 plt.gca().set_frame_on(False)
 plt.gca().axes.get_yaxis().set_visible(False)
-plt.xlim([-.5, 9.2])
+plt.xlim([-.5, 9.4])
 plt.gca().set_axisbelow(True)
 
 yrow = 0
@@ -177,6 +177,8 @@ myboxplot(5.5,rng, 'experts', rightlabel='experts $21^{st}$C', islabel=True)
 
 plt.grid(axis='x',linewidth=0.5,color='#EEEEEE')
 plt.xlabel('TSLS (mm/yr/K)')
+plt.savefig(f'{figurefolder}/TSLS_barchart.png',bbox_inches='tight')
+
 plt.show()
 
 df = pd.DataFrame(output)

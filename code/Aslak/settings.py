@@ -70,7 +70,7 @@ eflag = 1
 
 
 datafolder = os.path.abspath('../../data')
-
+figurefolder = os.path.abspath('../../results/figures')
 
 if __name__ == "__main__":
     # this is some test code:

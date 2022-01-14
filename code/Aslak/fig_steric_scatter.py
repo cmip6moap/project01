@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import hadcrut5
-from settings import scenariocolors, datafolder
+from settings import scenariocolors, datafolder, figurefolder
 from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
 
@@ -60,6 +60,8 @@ plt.title(f'{sheet_name}')
 plt.xlabel("Temporal average of GMST (°C)")
 plt.ylabel("$dS/dt$ (mm/yr)")
 plt.legend(fontsize='small',loc='lower right')
+plt.savefig(f'{figurefolder}/steric_scatter.png',bbox_inches='tight')
+
 plt.show()
 
 

@@ -2,4 +2,4 @@
 
 Possibly extracted from your notebooks
 
-Explain what the files are here
+Generated datafiles are placed[in this folder](https://github.com/cmip6moap/project01/tree/main/data/processed_data)

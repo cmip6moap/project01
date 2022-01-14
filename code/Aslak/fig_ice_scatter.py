@@ -16,7 +16,7 @@ import corner
 import hadcrut5
 import re
 import os
-from settings import scenariocolors, datafolder
+from settings import scenariocolors, datafolder, figurefolder
 from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
 
@@ -80,5 +80,7 @@ for component in components:
     plt.xlabel("Temporal average of GMST (°C)")
     plt.ylabel("$dS/dt$ (mm/yr)")
     plt.legend()
+    plt.savefig(f'{figurefolder}/{sheet_name}_scatter.png',bbox_inches='tight')
+
     plt.show()
 

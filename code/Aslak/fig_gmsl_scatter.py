@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from settings import scenariocolors, baseline_period, datafolder
+from settings import scenariocolors, baseline_period, datafolder,figurefolder
 from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
 
@@ -45,6 +45,7 @@ if True:
     tas =pd.read_csv(tasfile)
     tasbase = tas[(tas.Year>=baseline_period[0]) & (tas.Year<=baseline_period[1])].mean()
 
+
     Tavg = []
     dSdt = []
     for scenario in scenarios:
@@ -76,5 +77,8 @@ plt.title(f'GMSL')
 plt.xlabel("Temporal average of GMST (°C)")
 plt.ylabel("$dS/dt$ (mm/yr)")
 plt.legend(fontsize='small')
+
+plt.savefig(f'{figurefolder}/GMSL_scatter.png',bbox_inches='tight')
+
 plt.show()
 
