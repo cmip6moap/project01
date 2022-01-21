@@ -65,6 +65,7 @@ for component in components:
         if groupix[-1]<2060:
             confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col, label=f'{scenario}')
         else:
+            print(g.Tavg.mean())
             confidence_ellipse(g.Tavg,g.dSdt*1000,facecolor=col, linestyle = '--')
     # ------------ PLOT comparison data --------------
     if region:
@@ -80,7 +81,7 @@ for component in components:
     plt.xlabel("Temporal average of GMST (°C)")
     plt.ylabel("$dS/dt$ (mm/yr)")
     plt.legend()
-    plt.savefig(f'{figurefolder}/{sheet_name}_scatter.png',bbox_inches='tight')
+    plt.savefig(f'{figurefolder}/{sheet_name}_scatter.png',bbox_inches='tight',dpi=600)
 
     plt.show()
 
