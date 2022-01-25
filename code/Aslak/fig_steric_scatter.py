@@ -23,7 +23,6 @@ df = pd.read_csv(fname, index_col=0)
 
 
 df = df.dropna() # there are some NaNs. Maybe due to incomplete temporal coverage?
-#TODO: look into why there are nans!
 
 
 
