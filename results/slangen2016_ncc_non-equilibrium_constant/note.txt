@@ -1,3 +1,7 @@
+****************
+###Important###
+This is the old output (Sep 2021). Please rerun the script if you need an updated version
+****************
 Mimic Slangen et al. 2016 (NCC) Figure S2 with CMIP6 steric data
 
 Input data:
