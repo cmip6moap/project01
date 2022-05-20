@@ -9,7 +9,9 @@ import numpy as np
 M15 = 0.434
 M15sigma = 0.11
 
-#from figure 2 we see that 25%-50% percent
+#from  Parkes&Marzeion figure 2 we estimate that 25%-50% of
+#the mass change is from missing/uncharted glaciers..
+#This is looking at the early 20thC.
 PM18 = np.array([.25, .5])
 
 multiplier = 1/(1-PM18)
@@ -19,7 +21,7 @@ log_multiplier_mu = np.mean(np.log(multiplier))
 # interpret range as \pm2\sigma
 log_multiplier_sigma = np.diff(np.log(multiplier))[0]/4
 
-
+#monte carlo
 V = np.empty(10000)
 for ii in range(len(V)):
     v = M15 + np.random.randn()*M15sigma
