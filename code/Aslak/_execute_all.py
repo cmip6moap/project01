@@ -9,7 +9,7 @@ Created on Tue Dec 14 11:46:09 2021
 
 #This script runs everything in the right order.
 
-#1) configure settings.py
+#1) configure paths etc in settings.py
 import extract_steric
 import extract_iceemu
 import combine_v2

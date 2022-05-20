@@ -57,6 +57,7 @@ for sheet in sheets:
             slopes[ii] = p[0]
             o_intercept[ii] = p[1]
             T0s[ii] = -p[1] / p[0]
+        mc = pd.DataFrame()
 
         ptiles = np.percentile(slopes,[5,17,50,83,95])
 
