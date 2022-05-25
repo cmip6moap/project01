@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import hadcrut5
-from settings import datafolder
+from settings import *
 
 
 
@@ -42,6 +42,10 @@ def plot_comparison(sheet_name = 'GMSL', show_experts=False, color='k', show_lin
                  color=color,
                  fontsize=8)
         lbl = None
+        print(row["Period start"], row["Period end"],
+              Trow["Tanom"], row["Rate"], Trow["sigmaT"], row["RateSigma"])
+        #print(row)
+
 
     if show_experts:
         experts = pd.read_excel( f"{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx",
@@ -55,10 +59,19 @@ def plot_comparison(sheet_name = 'GMSL', show_experts=False, color='k', show_lin
             Serr =experts[['SLR 17', 'SLR 83']].to_numpy()*10
             plt.errorbar(T, S,fmt='ro',yerr = np.abs(Serr-np.tile(S,(2,1)).T), xerr = Tbase['tot_sigma'],label='Experts')
 
+    if show_line:
+        obs = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_observations.csv')
+        obs = obs.loc[obs.component==sheet_name].iloc[0]
+        if len(obs)>0:
+            x = np.array([obs.T0, 0.2])
+            y = (x*obs.TSLS + obs.Srate0)*1000
+            plt.plot(x,y,scenariocolors['HISTORICAL'],
+                     label='Fit to data',linewidth=1,zorder=-10)
+
 
 
 if __name__ == "__main__":
     # this is some test code:
     plot_comparison('GMSL')
-    plot_comparison('G&C GMSL', color='r')
+    #plot_comparison('G&C GMSL', color='r')
     plt.legend()

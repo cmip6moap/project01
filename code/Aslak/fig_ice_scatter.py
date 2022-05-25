@@ -50,16 +50,18 @@ for component in components:
     if not isinstance(region,str):
         region = None
     G = df.groupby(["scenario", "startyr", "endyr"])
+
     for groupix, g in G:
         scenario = groupix[0]
         col = scenariocolors[scenario]
+        #marker = 'P' if (groupix[-1]<2060) else 'o'
         plt.scatter(
             g.Tavg,
             g.dSdt * 1000,
             c=col,
             s=3,
+            edgecolor=None,
             zorder=-1,
-            edgecolors='none',
             alpha=0.2,
         )
         if groupix[-1]<2060:

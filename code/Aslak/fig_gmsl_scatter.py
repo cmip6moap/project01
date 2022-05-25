@@ -8,6 +8,10 @@ from misc_tools import confidence_ellipse
 from plot_comparison_data import plot_comparison
 
 
+
+
+
+
 fname = f'{datafolder}/processed_Data/combined/combined_dSdt_T.csv'
 df = pd.read_csv(fname)
 
@@ -71,7 +75,10 @@ if True:
         # t = tas[(tas.Year>=2020) & (tas.Year<=2100)].mean() - tasbase
         # plt.plot(t['Mean'],dSdt*1000,'ro')
 
-plot_comparison('GMSL')
+
+plot_comparison('GMSL',show_line=True)
+
+
 
 plt.title(f'GMSL')
 plt.xlabel("Temporal average of GMST (°C)")

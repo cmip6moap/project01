@@ -29,8 +29,8 @@ for sheet in sheets:
     if len(df)<2:
         print(f'insufficient historical data to estimate TSLS for {sheet}')
         continue
-    df['Tanom'] = df.apply(lambda row: hadcrut5.getTstats(row['Period start'],row['Period start'])['Tanom'], axis=1)
-    df['sigmaT'] = df.apply(lambda row: hadcrut5.getTstats(row['Period start'],row['Period start'])['sigmaT'], axis=1)
+    df['Tanom'] = df.apply(lambda row: hadcrut5.getTstats(row['Period start'],row['Period end'])['Tanom'], axis=1)
+    df['sigmaT'] = df.apply(lambda row: hadcrut5.getTstats(row['Period start'],row['Period end'])['sigmaT'], axis=1)
 
     for min_year in (1000,):#,1990):
         ix = df['Period start']>min_year
@@ -47,7 +47,7 @@ for sheet in sheets:
             print(f'{sheet} observational TSLS post 1990: {p[0]*1000:.2f}')
 
         #note this assumes independent errors...
-        Nmc = 1000
+        Nmc = 10000
         slopes = np.full((Nmc),np.nan)
         T0s = np.full((Nmc),np.nan)
         o_intercept = np.full((Nmc),np.nan)
@@ -57,7 +57,6 @@ for sheet in sheets:
             slopes[ii] = p[0]
             o_intercept[ii] = p[1]
             T0s[ii] = -p[1] / p[0]
-        mc = pd.DataFrame()
 
         ptiles = np.percentile(slopes,[5,17,50,83,95])
 
@@ -77,6 +76,9 @@ for sheet in sheets:
                 'sigmaT0': np.std(T0s),
                 'sigmaSrate0': np.std(o_intercept),
             })
+        #print(df.loc[:,('Name', 'Rate', 'Tanom', 'RateSigma', 'sigmaT')])
+
+
 
 output = pd.DataFrame(output)
 
