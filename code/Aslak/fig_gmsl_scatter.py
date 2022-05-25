@@ -81,7 +81,7 @@ plot_comparison('GMSL',show_line=True)
 
 
 plt.title(f'GMSL')
-plt.xlabel("Temporal average of GMST (°C)")
+plt.xlabel("Temporal average of GMST (K)")
 plt.ylabel("$dS/dt$ (mm/yr)")
 plt.legend(fontsize='small')
 

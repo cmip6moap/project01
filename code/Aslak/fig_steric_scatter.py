@@ -56,7 +56,7 @@ for groupix, g in G:
 sheet_name='Steric'
 plot_comparison(sheet_name)
 plt.title(f'{sheet_name}')
-plt.xlabel("Temporal average of GMST (°C)")
+plt.xlabel("Temporal average of GMST (K)")
 plt.ylabel("$dS/dt$ (mm/yr)")
 plt.legend(fontsize='small',loc='lower right')
 plt.savefig(f'{figurefolder}/steric_scatter.png',bbox_inches='tight')

@@ -25,14 +25,11 @@ for ix,f in final.iterrows():
     print(f'{f.component: >11}\t{f.label: >12}\t{f.period}\t{f.mu:.1f}±{f.sigma:.1f} mm/yr/K')
 
 
-#for ix,f in final.iterrows():
-#    print(f'TSLS {f.component: >11}\t{f.label: >12}\t{f.period}\t{f.mu:.1f} ± {f.sigma:.1f} mm/yr/K')
-
 
 # STERIC SECTION:
 print('===========STERIC============')
 
-print(f"Steric observational T0: {tsls_observations.loc['Steric'].T0:.1f}")
+print(f"Steric observational T0: {tsls_observations.loc['Steric'].T0:.1f}±{tsls_observations.loc['Steric'].sigmaT0:.1f}")
 
 df = pd.read_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_steric.csv')
 for startyr in [1850,2016,2051]:

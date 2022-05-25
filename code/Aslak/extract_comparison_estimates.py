@@ -14,8 +14,14 @@ from tqdm import tqdm
 import corner
 import hadcrut5
 import re
+from scipy.stats import trim_mean
 from settings import datafolder
 
+
+def robust_std(v):
+    #https://en.wikipedia.org/wiki/Robust_measures_of_scale
+    IQR = np.diff(np.percentile(v,[25,75]))[0]
+    return IQR*0.7413
 
 
 comparisonfile = f'{datafolder}/raw_data/ComparisonEstimates/ComparisonSLRrates.xlsx'
@@ -53,7 +59,8 @@ for sheet in sheets:
         o_intercept = np.full((Nmc),np.nan)
         for ii in range(Nmc):
             p = np.polyfit(x+np.random.randn(x.size)*sigmax,
-                           y+np.random.randn(y.size)*sigmay,1,w=1/sigmay)
+                           y+np.random.randn(y.size)*sigmay,
+                           1, w=1/sigmay)
             slopes[ii] = p[0]
             o_intercept[ii] = p[1]
             T0s[ii] = -p[1] / p[0]
@@ -65,7 +72,7 @@ for sheet in sheets:
                 'period start': subset['Period start'].min(),
                 'period end': subset['Period end'].max(),
                 'TSLS': np.mean(slopes),
-                'T0': np.mean(T0s),
+                'T0': trim_mean(T0s,0.1),
                 'Srate0': np.mean(o_intercept),
                 'sigmaTSLS': np.std(slopes),
                 'TSLS_P5': ptiles[0],
@@ -73,7 +80,7 @@ for sheet in sheets:
                 'TSLS_P50': ptiles[2],
                 'TSLS_P83': ptiles[3],
                 'TSLS_P95': ptiles[4],
-                'sigmaT0': np.std(T0s),
+                'sigmaT0': robust_std(T0s),
                 'sigmaSrate0': np.std(o_intercept),
             })
         #print(df.loc[:,('Name', 'Rate', 'Tanom', 'RateSigma', 'sigmaT')])
@@ -81,8 +88,7 @@ for sheet in sheets:
 
 
 output = pd.DataFrame(output)
-
-
+1/0
 output.to_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_observations.csv')
 
 # plt.errorbar(x,y,xerr=sigmax,yerr=sigmay)
