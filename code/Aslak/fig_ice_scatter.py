@@ -80,7 +80,7 @@ for component in components:
         plt.title(f'{sheet_name}  Risk averse')
     else:
         plt.title(f'{sheet_name}')
-    plt.xlabel("Temporal average of GMST (°C)")
+    plt.xlabel("Temporal average of GMST (K)")
     plt.ylabel("$dS/dt$ (mm/yr)")
     plt.legend()
     plt.savefig(f'{figurefolder}/{sheet_name}_scatter.png',bbox_inches='tight',dpi=600)

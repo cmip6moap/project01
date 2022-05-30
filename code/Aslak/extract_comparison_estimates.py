@@ -88,7 +88,7 @@ for sheet in sheets:
 
 
 output = pd.DataFrame(output)
-1/0
+
 output.to_csv(f'{datafolder}/processed_data/TSLS_estimates/tsls_observations.csv')
 
 # plt.errorbar(x,y,xerr=sigmax,yerr=sigmay)
