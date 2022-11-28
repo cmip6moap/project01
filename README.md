@@ -2,6 +2,19 @@
 
 Many will be familiar with the concept of transient climate sensitivity: what is the transient temperature response to a doubling in CO2 concentrations? This is a key question for understanding the response of the climate system to CO2 forcing. But there are other important transient responses we need to understand. One of these is the response of global mean sea level to CO2 forcing, which we can call the Transient Sea Level Sensitivity (TSLS). Sea level rise is one of the most serious consequences of climate warming but making projections of it has proved challenging. The TSLS will depend on the coupled climate system response and how glaciers and ice sheets respond to atmospheric and oceanic changes. The aim of this project is to determine the TSLS of CMIP6 coupled models for the 21st century and to compare this to the TSLS that has been estimated for CMIP5 and previous IPCC class experiments in Grinsted and Christensen 2021. This will be achieved by determining the mean response of the oceans and land ice to a change in temperature averaged over multiple decades. We will also explore the spread in TSLS amongst model simulations and the level of confidence we have in the ensemble mean.
 
+# Paper
+
+The project resulted in this paper:
+
+Grinsted, A., Bamber, J., Bingham, R., Buzzard, S., Nias, I., Ng, K., & Weeks, J. (2022). The transient sea level response to external forcing in CMIP6 models. Earth's Future, 10, e2022EF002696. [doi:10.1029/2022EF002696](https://doi.org/10.1029/2022EF002696)
+
+## Plain Language Summary
+
+The planet is warming, and sea levels are rising as oceans expand and ice on land melts. The warmer the Earth gets, the faster the seas will rise. Projecting future sea level rise (SLR) using numerical models has proved extremely challenging and, as a consequence, estimates carry a large uncertainty. How good are the models of ocean expansion and mass loss from glaciers and ice sheets? We tackle this question by comparing how the models react to future warming with how sea level reacted in the past. The models for glaciers, Greenland, and the oceans are compatible with observations. For the largest ice mass on the planet, the Antarctic Ice Sheet, the models do not agree with the observations. As a result, projections of global SLR may be an underestimate.
+
+
+
+
 ## Contributors
 
 * Jonathan Bamber, University of Bristol
@@ -40,47 +53,14 @@ As shown in Figure 2 of Grinsted and Christensen (2021), the transient sea level
 
 There are further `README` files in key directories.
 
-### Key files
-
-* [...]
-* [...]
-* [...]
-
 ### How to reproduce our outputs
 
-1. [...]
-2. [...]
-3. [...]
+Follow the processing order in [_readme.txt](https://github.com/cmip6moap/project01/blob/main/code/Aslak/_readme.txt)
 
-### Repo structure
+Most input data are located in [data/raw_data](https://github.com/cmip6moap/project01/tree/main/data/raw_data) 
 
-    .
-    ├── notebooks
-    │   ├── [...].ipynb
-    │   └── [...].ipynb
-    │           The Jupyter Notebooks that we created
-    │
-    ├── code
-    │   ├── [...].py
-    │   └── [...].py
-    │           Any code (Python or otherwise) that we created that doesn't
-    │           sit within a Notebook
-    │
-    ├── results
-    │   ├── [...].pdf
-    │   └── [...].png
-    │           The key figures that we produced
-    │
-    ├── data
-    │   ├── raw_data
-    │   │       Any data we used that didn't come from JASMIN
-    │   │
-    │   └── processed_data
-    │           Any output data that we produced
-    │
-    ├── environment.yml
-    └── environment_frozen.yml
-            The libraries and versions that we used
+Generated data including intermediate data files are located in [data/processed_data](https://github.com/cmip6moap/project01/tree/main/data/processed_data) 
+
 
 ## Next steps for our project
 
